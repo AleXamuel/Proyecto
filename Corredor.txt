@@ -1,0 +1,12 @@
+Crear entorno virtual	       python -m venv venv
+Activar entorno                venv\Scripts\activate
+Instalar Flask	               pip install flask flask_sqlalchemy flask_migrate
+Crear migraciones	           flask db init
+Generar tablas	               flask db migrate -m "Inicial"
+Aplicar migraciones	           flask db upgrade
+Ejecutar app	               python app.py
+Ver base SQLite	               python -m sqlite_web instance/Desarrollo2.db
+Salir del entorno	           deactivate
+
+pip install sqlite-web
+pip install flask flask_sqlalchemy flask_migrate

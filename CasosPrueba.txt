@@ -1,0 +1,117 @@
+1 PERSONAS
+http://localhost:5000/api/personas
+http://localhost:5000/api/personas/1
+
+{
+  "nombre": "Juliana",
+  "apellido": "Caicedo",
+  "username": "juli123",
+  "contrasena": "12345",
+  "correo": "juliana@gmail.com",
+  "telefono": "3013085776",
+  "direccion": "Calle 123 #45"
+}
+
+http://localhost:5000/api/personas/1
+
+{
+  "telefono": "3013057845",
+  "direccion": "Carrera 90 # 10"
+}
+
+2 USUARIO
+
+http://localhost:5000/api/usuarios
+{
+  "id_persona": 1,
+  "estado": "Activo"
+}
+
+http://localhost:5000/api/usuarios/1
+
+{
+  "estado": "Inactivo"
+}
+
+3 ADMIN 
+
+http://localhost:5000/api/admins
+{
+  "id_persona": 2,
+  "cargo": "admin"
+}
+
+
+http://localhost:5000/api/admins/1
+
+{
+  "cargo": "Administrador"
+}
+
+4. CANCIONES
+
+http://localhost:5000/api/canciones
+
+{
+  "id_admin": 1,
+  "nombre": "dulcito e coco",
+  "artista": "vicente garcia",
+  "precio": 15.000,
+  "duracion": 280,
+  "memoria": 3.5,
+  "calidad": "Alta"
+}
+
+http://localhost:5000/api/canciones/1
+
+{
+  "precio": 10.000,
+  "calidad": "Media"
+}
+
+5. vinilos
+
+http://localhost:5000/api/vinilos
+
+{
+  "id_usuario": 1,
+  "nombre": "Vinilo x",
+  "precio": 0,
+  "imagen_caratula": "caratula1.png",
+  "descripcion": "xxxx"
+}
+
+http://localhost:5000/api/vinilos/1
+
+{
+  "precio": 29.999,
+  "descripcion": "Exxxx"
+}
+
+6. Playlist
+
+http://localhost:5000/api/playlists
+
+{
+  "id_usuario": 1,
+  "votos": 10
+}
+http://localhost:5000/api/playlists/1
+
+{"votos": 5, "id_usuario": 2}
+
+
+7. Reseñas
+
+http://localhost:5000/api/resenas
+
+{
+  "id_compra": 1,
+  "calificacion": 4.5,
+  "comentario": "xxx"
+}
+
+http://localhost:5000/api/resenas/1
+{
+  "comentario": "xxxxx"
+}
