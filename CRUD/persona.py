@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from db import db
 from models import Persona
 
-bp_persona = Blueprint("persona", __name__, url_prefix="/api/personas")
+bp_persona = Blueprint("persona", __name__, url_prefix="/api/persona")
 
 @bp_persona.post("")
 def create_persona():

@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from db import db
 from models import *
 
-bp_usuario = Blueprint("usuario", __name__, url_prefix="/api/usurio")
+bp_usuario = Blueprint("usuario", __name__, url_prefix="/api/usuario")
 @bp_usuario.post("")
 def create_usuario():
     data = request.get_json() or {}
