@@ -3,16 +3,37 @@ from db import db
 from models import *
 
 bp_cancion = Blueprint("cancion", __name__, url_prefix="/api/cancion")
+
 @bp_cancion.post("")
 def create_cancion():
     data = request.get_json() or {}
-    required = ["id_admin", "nombre", "artista", "precio", "duracion", "memoria", "calidad"]
-    if not all(k in data for k in required):
-        return jsonify(error=f"Campos requeridos: {', '.join(required)}"), 400
-    c = Cancion(**data)
-    db.session.add(c)
-    db.session.commit()
-    return jsonify(c.to_dict()), 201
+
+    # Si es una lista, procesamos varias canciones
+    if isinstance(data, list):
+        canciones_creadas = []
+        for item in data:
+            required = ["id_admin", "nombre", "artista", "precio", "duracion", "memoria", "calidad"]
+            if not all(k in item for k in required):
+                return jsonify(error=f"Campos requeridos: {', '.join(required)}"), 400
+
+            c = Cancion(**item)
+            db.session.add(c)
+            canciones_creadas.append(c)
+
+        db.session.commit()
+        return jsonify([c.to_dict() for c in canciones_creadas]), 201
+
+    # Si es un solo diccionario, procesamos una canción
+    else:
+        required = ["id_admin", "nombre", "artista", "precio", "duracion", "memoria", "calidad"]
+        if not all(k in data for k in required):
+            return jsonify(error=f"Campos requeridos: {', '.join(required)}"), 400
+
+        c = Cancion(**data)
+        db.session.add(c)
+        db.session.commit()
+        return jsonify(c.to_dict()), 201
+
 
 @bp_cancion.get("")
 def list_canciones():
