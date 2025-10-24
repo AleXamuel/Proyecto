@@ -32,7 +32,7 @@ def crear_usuario(data,new_persona):
     )
     db.session.add(new_usuario)
     db.session.commit()
-    return 
+    return new_usuario
 
 def crear_admin(data,new_persona):
     new_admin= Administrador(

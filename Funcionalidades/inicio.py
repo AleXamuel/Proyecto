@@ -27,7 +27,7 @@ def login():
     else:
         return jsonify(error="Contraseña incorrecta"), 401
 
-@bp_inicio.post("/register/usuario")
+@bp_inicio.post("/registrar/usuario")
 def register_usuario():
     data = request.get_json() or {}
     # Crear nueva persona
@@ -42,7 +42,7 @@ def register_usuario():
         "id_usuario": new_usuario.id_usuario
     }), 201
 
-@bp_inicio.post("/register/admin")
+@bp_inicio.post("/registrar/admin")
 def register_admin():
     data = request.get_json() or {}
     # Crear nueva persona
@@ -54,5 +54,5 @@ def register_admin():
     return jsonify({
         "mensaje": "Registro exitoso",
         "id_persona": new_persona.id_persona,
-        "id_usuario": new_admin.id_admin
+        "id_admin": new_admin.id_admin
     }), 201
