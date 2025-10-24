@@ -220,3 +220,42 @@ class CompraCancion(db.Model):
             "id_compra": self.id_compra,
             "id_cancion": self.id_cancion
         }
+class Carrito(db.Model):
+    __tablename__ = "Carrito"
+    id_carrito = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, db.ForeignKey("Usuario.id_usuario"), nullable=False)
+
+    canciones = db.relationship("CarritoCancion", backref="carrito", cascade="all, delete-orphan")
+    vinilos = db.relationship("CarritoVinilo", backref="carrito", cascade="all, delete-orphan")
+
+    def to_dict(self):
+        return {
+            "id_carrito": self.id_carrito,
+            "id_usuario": self.id_usuario
+        }
+class CarritoCancion(db.Model):
+    __tablename__ = "CarritoCancion"
+    id_carrito_cancion = db.Column(db.Integer, primary_key=True)
+    id_carrito = db.Column(db.Integer, db.ForeignKey("Carrito.id_carrito"), nullable=False)
+    id_cancion = db.Column(db.Integer, db.ForeignKey("Cancion.id_cancion"), nullable=False)
+
+    def to_dict(self):
+        return {
+            "id_carrito_cancion": self.id_carrito_cancion,
+            "id_carrito": self.id_carrito,
+            "id_cancion": self.id_cancion
+        }
+
+
+class CarritoVinilo(db.Model):
+    __tablename__ = "CarritoVinilo"
+    id_carrito_vinilo = db.Column(db.Integer, primary_key=True)
+    id_carrito = db.Column(db.Integer, db.ForeignKey("Carrito.id_carrito"), nullable=False)
+    id_vinilo = db.Column(db.Integer, db.ForeignKey("Vinilo.id_vinilo"), nullable=False)
+
+    def to_dict(self):
+        return {
+            "id_carrito_vinilo": self.id_carrito_vinilo,
+            "id_carrito": self.id_carrito,
+            "id_vinilo": self.id_vinilo
+        }
