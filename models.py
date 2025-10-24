@@ -1,5 +1,5 @@
 from db import db
-
+from datetime import datetime
 class Persona(db.Model):
     __tablename__ = "Persona"
     id_persona = db.Column(db.Integer, primary_key=True)
@@ -10,8 +10,10 @@ class Persona(db.Model):
     correo = db.Column(db.String(150), unique=True, nullable=False)
     telefono = db.Column(db.String(20))
     direccion = db.Column(db.String(200))
-    fecha_registro = db.Column(db.String(10))
-
+    fecha_registro = db.Column(
+        db.String(10),
+        default=lambda: datetime.now().strftime("%Y-%m-%d")
+    )
     usuario = db.relationship("Usuario", backref="persona", cascade="all, delete-orphan")
     administrador = db.relationship("Administrador", backref="persona", cascade="all, delete-orphan")
 

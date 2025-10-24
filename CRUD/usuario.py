@@ -27,10 +27,11 @@ def get_usuario(id_usuario):
     return jsonify({
     "usuario": usuario.to_dict(),
     "persona": persona,
-    "playlists": playlists,
-    "vinilos": vinilos,
-    "compras": compras
-})
+    "playlists": playlists if playlists else "Sin playlists",
+    "vinilos": vinilos if vinilos else "Sin vinilos",
+    "compras": compras if compras else "Sin compras"
+    })
+
 
 @bp_usuario.patch("/<int:id_usuario>")
 def update_usuario(id_usuario):
