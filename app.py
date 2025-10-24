@@ -13,7 +13,7 @@ from CRUD.compra_cancion import bp_compra_cancion
 from CRUD.compra_vinilo import bp_compra_vinilo
 from CRUD.contenido_playlist import bp_contenido_playlist
 from CRUD.contenido_vinilo import bp_contenido_vinilo
-
+from Funcionalidades.inicio import bp_inicio
 def create_app():
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Desarrollo2.db"
@@ -35,6 +35,7 @@ def create_app():
     app.register_blueprint(bp_compra_vinilo)
     app.register_blueprint(bp_contenido_playlist)
     app.register_blueprint(bp_contenido_vinilo)
+    app.register_blueprint(bp_inicio)
     @app.get("/api/health")
     def health():
         return {"ok": True, "message": "API REST en funcionamiento ✅"}
