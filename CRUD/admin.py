@@ -38,3 +38,5 @@ def delete_admin(id_admin):
     db.session.delete(a)
     db.session.commit()
     return jsonify(ok=True)
+
+#Jelou jelooou mi genteeee
