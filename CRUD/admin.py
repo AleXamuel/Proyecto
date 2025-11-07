@@ -4,7 +4,7 @@ from models import *
 
 bp_admin = Blueprint("admin", __name__, url_prefix="/api/admin")
 
-
+#Creando post de admin 
 @bp_admin.post("")
 def create_admin():
     data = request.get_json() or {}
