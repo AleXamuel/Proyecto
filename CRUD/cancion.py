@@ -43,6 +43,7 @@ def list_canciones():
 def get_cancion(id_cancion):
     return jsonify(Cancion.query.get_or_404(id_cancion).to_dict())
 
+#Update cancion 
 @bp_cancion.patch("/<int:id_cancion>")
 def update_cancion(id_cancion):
     c = Cancion.query.get_or_404(id_cancion)
