@@ -4,6 +4,7 @@ from models import *
 
 bp_playlist = Blueprint("playlist", __name__, url_prefix="/api/playlist")
 
+#registro de playlist, metodos CRUD
 
 @bp_playlist.post("")
 def create_playlist():
