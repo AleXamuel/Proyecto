@@ -1,8 +1,18 @@
+
+# Módulo: compra.py
+# Descripción: Define las rutas relacionadas con la gestión de compras
+# en una API construida con Flask. Incluye creación, listado, consulta,
+# actualización y eliminación de compras.
+
+
 from flask import Blueprint, request, jsonify
 from db import db
 from models import *
 
 bp_compra = Blueprint("compra", __name__, url_prefix="/api/compra")
+
+# POST /api/compra
+# Crear una nueva compra
 
 @bp_compra.post("")
 def create_compra():
@@ -13,6 +23,11 @@ def create_compra():
     db.session.add(p)
     db.session.commit()
     return jsonify(p.to_dict()), 201
+
+# GET /api/compra
+# Listar todas las compras
+
+
 @bp_compra.get("")
 def list_compras():
     return jsonify([c.to_dict() for c in Compra.query.all()])
