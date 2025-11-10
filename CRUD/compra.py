@@ -60,6 +60,9 @@ def update_compra(id_compra):
     db.session.commit()
     return jsonify(c.to_dict())
 
+# DELETE /api/compra/<id_compra>
+# Eliminar una compra
+
 @bp_compra.delete("/<int:id_compra>")
 def delete_compra(id_compra):
     c = Compra.query.get_or_404(id_compra)
