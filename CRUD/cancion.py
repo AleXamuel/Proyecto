@@ -4,6 +4,8 @@ from models import *
 
 bp_cancion = Blueprint("cancion", __name__, url_prefix="/api/cancion")
 
+#post canciones con .get from or
+
 @bp_cancion.post("")
 def create_cancion():
     data = request.get_json() or {}
