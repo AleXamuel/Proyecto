@@ -2,6 +2,7 @@ from db import db
 from models import *
 from flask import jsonify
 
+
 def crear_persona(data):
     required_fields = ["nombre", "apellido", "username", "contrasena", "correo", "telefono"]
     # Validar campos requeridos
