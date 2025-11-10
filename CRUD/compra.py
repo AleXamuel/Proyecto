@@ -51,6 +51,9 @@ def list_compras_por_usuario(id_usuario):
         return jsonify(message="El usuario no tiene compras registradas"), 200
     return jsonify([c.to_dict() for c in compras])
 
+# PATCH /api/compra/<id_compra>
+# Actualizar parcialmente una compra
+
 @bp_compra.patch("/<int:id_compra>")
 def update_compra(id_compra):
     c = Compra.query.get_or_404(id_compra)
