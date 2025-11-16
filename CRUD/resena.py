@@ -4,6 +4,12 @@ from models import *
 
 bp_resena = Blueprint("resena", __name__, url_prefix="/api/resena")
 
+#Sirve para registrar una nueva reseña en la base de datos cuando un usuario evalúa un producto o compra.
+#¿Qué hace?
+#- Recibe los datos de la reseña en formato JSON.
+#- Crea un objeto Resena.
+#- Lo guarda en la base de datos.
+
 @bp_resena.post("")
 def create_resena():
     data = request.get_json() or {}
@@ -11,6 +17,12 @@ def create_resena():
     db.session.add(r)
     db.session.commit()
     return jsonify(r.to_dict()), 201
+
+#¿Para qué sirve?
+#Sirve para ver todas las reseñas que existen en el sistema.
+#¿Qué hace?
+#Consulta la tabla de reseñas.
+#Devuelve la lista completa en formato JSON.
 
 @bp_resena.get("")
 def list_resenas():
