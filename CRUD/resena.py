@@ -37,6 +37,13 @@ def update_resena(id_resena):
     db.session.commit()
     return jsonify(r.to_dict())
 
+#¿Para qué sirve?
+#Sirve para modificar una reseña existente, por ejemplo editar el comentario o la calificación.
+#¿Qué hace?
+#- Busca la reseña por ID.
+#- Toma los campos enviados y actualiza solo los necesarios.
+#- Guarda los cambios.
+
 @bp_resena.get("/usuario/<int:id_usuario>")
 def list_resenas_por_usuario(id_usuario):
     compras = Compra.query.filter_by(id_usuario=id_usuario).all()
