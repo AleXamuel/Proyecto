@@ -55,6 +55,18 @@ def list_resenas_por_usuario(id_usuario):
         return jsonify(message="El usuario no tiene reseñas aún"), 200
     return jsonify([r.to_dict() for r in resenas])
 
+#¿Para qué sirve?
+#- Sirve para consultar todas las reseñas hechas por un usuario específico.
+#¿Qué hace?
+#- Busca todas las compras del usuario.
+#- Usa esas compras para encontrar sus reseñas.
+#- Devuelve la lista de reseñas relacionadas.
+
+#¿En qué casos se usa?
+#- Perfil de usuario
+#- Historial de compras
+#- Mostrar reseñas personales
+
 @bp_resena.delete("/<int:id_resena>")
 def delete_resena(id_resena):
     r = Resena.query.get_or_404(id_resena)
