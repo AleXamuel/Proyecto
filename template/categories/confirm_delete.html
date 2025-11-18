@@ -1,0 +1,7 @@
+<h1>Eliminar categoría: {{ category.name }}</h1>
+<p>¿Seguro que deseas eliminarla? (Esto también eliminará sus productos por CASCADE)</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Sí, eliminar</button>
+</form>
+<a href="{% url 'core:category_detail' pk=category.pk %}">Cancelar</a>

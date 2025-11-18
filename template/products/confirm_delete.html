@@ -1,0 +1,6 @@
+<h1>Eliminar producto: {{ product.name }}</h1>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Sí, eliminar</button>
+</form>
+<a href="{% url 'core:product_detail' pk=product.pk %}">Cancelar</a>

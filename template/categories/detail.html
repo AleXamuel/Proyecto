@@ -1,0 +1,16 @@
+<h1>{{ category.name }}</h1>
+<a href="{% url 'core:category_update' pk=category.pk %}">Editar</a>
+<form action="{% url 'core:category_delete' pk=category.pk %}" method="post" style="display:inline">
+  {% csrf_token %}
+  <button type="submit">Eliminar</button>
+</form>
+
+<h2>Productos en esta categoría</h2>
+<ul>
+  {% for p in products %}
+    <li><a href="{% url 'core:product_detail' pk=p.pk %}">{{ p.name }}</a> - {{ p.price }}</li>
+  {% empty %}
+    <li>Sin productos.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'core:product_create' %}">Nuevo producto</a>

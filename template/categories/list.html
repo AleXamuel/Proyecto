@@ -1,0 +1,12 @@
+<h1>Categorías</h1>
+<a href="{% url 'core:category_create' %}">Nueva categoría</a>
+<ul>
+  {% for c in categories %}
+    <li>
+      <a href="{% url 'core:category_detail' pk=c.pk %}">{{ c.name }}</a>
+    </li>
+  {% empty %}
+    <li>Sin categorías.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'core:product_list' %}">Ver productos</a>
