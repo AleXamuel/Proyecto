@@ -1,7 +1,0 @@
-<h1>{% if mode == "edit" %}Editar{% else %}Crear{% endif %} Producto</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Guardar</button>
-</form>
-<a href="{% url 'core:product_list' %}">Volver</a>

@@ -1,0 +1,11 @@
+<h1>{% if mode == "create" %}Crear Persona{% else %}Editar Persona{% endif %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+        {% if mode == "create" %}Crear{% else %}Guardar{% endif %}
+    </button>
+</form>
+
+<a href="{% url 'persona_list' %}">Volver</a>

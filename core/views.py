@@ -45,10 +45,10 @@ def crud_delete(request, pk, Model, template, redirect_name, ctx_name):
 
 # PERSONA
 def persona_list(request):
-    return crud_list(request, Persona, "persona/list.html", "personas")
+    return crud_list(request, Persona, "persona/list.html", "persona_list")
 
 def persona_detail(request, pk):
-    return crud_detail(request, pk, Persona, "persona/detail.html", "persona")
+    return crud_detail(request, pk, Persona, "persona/detail.html", "persona_detail")
 
 def persona_create(request):
     return crud_create(request, PersonaForm, "persona/form.html", "persona_detail")
@@ -58,6 +58,7 @@ def persona_update(request, pk):
 
 def persona_delete(request, pk):
     return crud_delete(request, pk, Persona, "persona/delete.html", "persona_list", "persona")
+
 
 
 # USUARIO

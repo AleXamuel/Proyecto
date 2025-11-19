@@ -1,0 +1,13 @@
+<h1>{{ persona.nombre }} {{ persona.apellido }}</h1>
+
+<ul>
+    <li>Username: {{ persona.username }}</li>
+    <li>Correo: {{ persona.correo }}</li>
+    <li>Teléfono: {{ persona.telefono }}</li>
+    <li>Dirección: {{ persona.direccion }}</li>
+    <li>Registrado: {{ persona.fecha_registro }}</li>
+</ul>
+
+<a href="{% url 'persona_update' persona.pk %}">Editar</a>
+<a href="{% url 'persona_delete' persona.pk %}">Eliminar</a>
+<a href="{% url 'persona_list' %}">Volver</a>
