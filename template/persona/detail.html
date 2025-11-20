@@ -8,6 +8,8 @@
     <li>Registrado: {{ persona.fecha_registro }}</li>
 </ul>
 
-<a href="{% url 'persona_update' persona.pk %}">Editar</a>
-<a href="{% url 'persona_delete' persona.pk %}">Eliminar</a>
-<a href="{% url 'persona_list' %}">Volver</a>
+<a href="{% url 'core:persona_update' persona.pk %}">Editar</a>
+<br>
+<a href="{% url 'core:persona_delete' persona.pk %}">Eliminar</a>
+<br>
+<a href="{% url 'core:persona_list' %}">Volver</a>

@@ -10,8 +10,8 @@ def persona_list(request):
     return render(request, "persona/list.html", {"persona": qs})
 def persona_detail(request, pk):
     obj = get_object_or_404(Persona, pk=pk)
-    products = obj.products.all()
-    return render(request, "persona/detail.html", {"persona": obj, "usuario": products})
+    usuario = obj.usuarios.all()
+    return render(request, "persona/detail.html", {"persona": obj, "usuario": usuario})
 
 @require_http_methods(["GET", "POST"])
 def persona_create(request):
