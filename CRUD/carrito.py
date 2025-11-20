@@ -4,6 +4,7 @@ from models import *
 
 bp_carrito = Blueprint("carrito", __name__, url_prefix="/api/carrito")
 
+#post de carrito de compras para visualizacion
 @bp_carrito.post("")
 def create_carrito():
     data = request.get_json() or {}
