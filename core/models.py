@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 
 
 class Persona(models.Model):
@@ -13,7 +13,7 @@ class Persona(models.Model):
     direccion = models.CharField(max_length=200, blank=True, null=True)
     fecha_registro = models.CharField(
         max_length=10,
-        default=lambda: datetime.now().strftime("%Y-%m-%d")
+        default=timezone.now
     )
 
     class Meta:

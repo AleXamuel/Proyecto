@@ -1,13 +1,11 @@
 <h1>Personas</h1>
-
-<a href="{% url 'persona_create' %}">Crear Persona</a>
-
+<a href="{% url 'core:persona_create' %}">Nueva categoría</a>
 <ul>
-    {% for p in personas %}
-        <li>
-            <a href="{% url 'persona_detail' p.pk %}">
-                {{ p.nombre }} {{ p.apellido }}
-            </a>
-        </li>
-    {% endfor %}
+  {% for c in categories %}
+    <li>
+      <a href="{% url 'core:persona_detail' pk=c.pk %}">{{ c.nombre }}</a>
+    </li>
+  {% empty %}
+    <li>Sin categorías.</li>
+  {% endfor %}
 </ul>

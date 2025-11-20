@@ -14,26 +14,26 @@ class PersonaForm(forms.ModelForm):
 class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
-        fields = ["id_persona", "estado"]
+        fields = ["persona", "estado"]
 
 
 class AdministradorForm(forms.ModelForm):
     class Meta:
         model = Administrador
-        fields = ["id_persona", "cargo"]
+        fields = ["persona", "cargo"]
 
 
 class ViniloForm(forms.ModelForm):
     class Meta:
         model = Vinilo
-        fields = ["id_usuario", "nombre", "precio", "imagen_caratula", "descripcion"]
+        fields = ["usuario", "nombre", "precio", "imagen_caratula", "descripcion"]
 
 
 class CancionForm(forms.ModelForm):
     class Meta:
         model = Cancion
         fields = [
-            "id_admin", "nombre", "artista", "precio",
+            "admin", "nombre", "artista", "precio",
             "duracion", "memoria", "calidad"
         ]
 
@@ -41,58 +41,58 @@ class CancionForm(forms.ModelForm):
 class PlaylistForm(forms.ModelForm):
     class Meta:
         model = Playlist
-        fields = ["id_usuario", "votos"]
+        fields = ["usuario", "votos"]
 
 
 class ContenidoPlaylistForm(forms.ModelForm):
     class Meta:
         model = ContenidoPlaylist
-        fields = ["id_lista", "id_cancion"]
+        fields = ["playlist", "cancion"]
 
 
 class ContenidoVinilosForm(forms.ModelForm):
     class Meta:
         model = ContenidoVinilos
-        fields = ["id_vinilo", "id_cancion"]
+        fields = ["vinilo", "cancion"]
 
 
 class CompraForm(forms.ModelForm):
     class Meta:
         model = Compra
-        fields = ["id_usuario", "fecha", "total"]
+        fields = ["usuario", "fecha", "total"]
 
 
 class ResenaForm(forms.ModelForm):
     class Meta:
         model = Resena
-        fields = ["id_compra", "calificacion", "comentario"]
+        fields = ["compra", "calificacion", "comentario"]
 
 
 class CompraViniloForm(forms.ModelForm):
     class Meta:
         model = CompraVinilo
-        fields = ["id_compra", "id_vinilo"]
+        fields = ["compra", "vinilo"]
 
 
 class CompraCancionForm(forms.ModelForm):
     class Meta:
         model = CompraCancion
-        fields = ["id_compra", "id_cancion"]
+        fields = ["compra", "cancion"]
 
 
 class CarritoForm(forms.ModelForm):
     class Meta:
         model = Carrito
-        fields = ["id_usuario"]
+        fields = ["usuario"]
 
 
 class CarritoCancionForm(forms.ModelForm):
     class Meta:
         model = CarritoCancion
-        fields = ["id_carrito", "id_cancion"]
+        fields = ["carrito", "cancion"]
 
 
 class CarritoViniloForm(forms.ModelForm):
     class Meta:
         model = CarritoVinilo
-        fields = ["id_carrito", "id_vinilo"]
+        fields = ["carrito", "vinilo"]

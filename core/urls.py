@@ -1,12 +1,11 @@
 from django.urls import path
 from . import views
 
+
 app_name = "core"
 
 urlpatterns = [
     path("", views.home, name="home"),
-    path("api/echo/", views.api_echo, name="api_echo"),
-    path("api/ping/", views.api_ping, name="api_ping"),
     # Category CRUD
     path("persona/", views.persona_list, name="persona_list"),
     path("persona/new/", views.persona_create, name="persona_create"),
