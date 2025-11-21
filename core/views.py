@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_http_methods
 from .models import *
 from .forms import *
+
 def home(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -9,16 +10,17 @@ def home(request):
 
         try:
             persona = Persona.objects.get(username=username, contrasena=password)
-            # Guardamos sesión para saber que el usuario está logueado
             request.session["usuario_id"] = persona.id_persona
-            return render(request, "opciones.html")  # Cambia por tu endpoint
+            if Administrador.objects.filter(persona=persona).exists():
+                return render(request,"opcion/admin.html") 
+            return render(request, "opcion/cliente.html")  
         except Persona.DoesNotExist:
             return render(request, "home.html", {
                 "error": "Usuario o contraseña incorrectos."
             })
 
     return render(request, "home.html")
-#Persona
+
 def persona_list(request):
     qs = Persona.objects.all()
     return render(request, "persona/list.html", {"persona": qs})
@@ -36,7 +38,7 @@ def persona_create(request):
             obj = form.save()
             Usuario.objects.create(
                 persona=obj,
-                estado="activo"   # Valor quemado
+                estado="activo"
             )
             return redirect("core:persona_detail", pk=obj.pk)
     else:

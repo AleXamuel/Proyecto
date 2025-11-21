@@ -16,6 +16,7 @@ urlpatterns = [
     path("buscar/cancion/", views.buscar_cancion, name="buscar_cancion"),
     path("buscar/lista/", views.buscar_lista, name="buscar_lista"),
     path("buscar/vinilo/", views.buscar_vinilo, name="buscar_vinilo"),
+    path("cuenta/", views.cuenta, name="cuenta"),
 
     
 ]
