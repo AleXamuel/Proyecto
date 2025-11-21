@@ -22,6 +22,7 @@ urlpatterns = [
     path("cancion/new/", views.cancion_create, name="cancion_create"),
     path("opcion_usuario/", views.opcion_usuario, name="opcion_usuario"),
     path("opcion_admin/", views.opcion_admin, name="opcion_admin"),
+    path("cancion/", views.cancion_list, name="cancion_list"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

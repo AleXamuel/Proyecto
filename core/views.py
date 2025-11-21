@@ -121,3 +121,14 @@ def cancion_create(request):
         "form": form,
         "mode": "create"
     })
+
+@require_http_methods(["GET"])
+def cancion_list(request):
+    admin_id = request.session.get("admin_id")
+    if not admin_id:
+        return redirect("core:home")
+    admin_obj = Administrador.objects.get(pk=admin_id)
+    canciones = Cancion.objects.filter(admin=admin_obj)
+    return render(request, "cancion/list.html", {
+        "canciones": canciones
+    })

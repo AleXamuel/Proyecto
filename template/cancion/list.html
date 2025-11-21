@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Canciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #5a189a;
+        }
+        .song-card {
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Mis Canciones</h1>
+
+{% if canciones %}
+    {% for c in canciones %}
+        <div class="song-card">
+            <h3>{{ c.nombre }}</h3>
+            <p>Artista: {{ c.artista }}</p>
+            <p>Precio: ${{ c.precio }}</p>
+
+            {% if c.caratula %}
+                <img src="{{ c.caratula.url }}" width="120">
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No tienes canciones registradas aún.</p>
+{% endif %}
+
+<br>
+<a href="{% url 'core:cancion_create' %}">Volver</a>
+
+</body>
+</html>

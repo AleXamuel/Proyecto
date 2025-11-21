@@ -32,10 +32,11 @@ class ViniloForm(forms.ModelForm):
 class CancionForm(forms.ModelForm):
     class Meta:
         model = Cancion
-        fields = [
-            "nombre", "artista", "precio",
-            "duracion", "caratula"
-        ]
+        fields = ["nombre", "artista", "precio", "duracion", "caratula"]
+        labels = {
+            "duracion": "Duración (segundos)",
+        }
+
 
 
 class PlaylistForm(forms.ModelForm):
