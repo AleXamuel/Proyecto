@@ -11,7 +11,7 @@ def home(request):
             persona = Persona.objects.get(username=username, contrasena=password)
             # Guardamos sesión para saber que el usuario está logueado
             request.session["usuario_id"] = persona.id_persona
-            return render(request, "persona/list.html")  # Cambia por tu endpoint
+            return render(request, "opciones.html")  # Cambia por tu endpoint
         except Persona.DoesNotExist:
             return render(request, "home.html", {
                 "error": "Usuario o contraseña incorrectos."
@@ -34,6 +34,10 @@ def persona_create(request):
         form = PersonaForm(request.POST)
         if form.is_valid():
             obj = form.save()
+            Usuario.objects.create(
+                persona=obj,
+                estado="activo"   # Valor quemado
+            )
             return redirect("core:persona_detail", pk=obj.pk)
     else:
          form = PersonaForm()
@@ -58,3 +62,25 @@ def persona_delete(request, pk):
          obj.delete()
          return redirect("core:persona_list")
     return render(request, "persona/delete.html", {"persona": obj})
+
+def buscar_cancion(request):
+    return render(request, "buscar/cancion.html")
+def buscar_lista(request):
+    return render(request, "buscar/lista.html")
+def buscar_vinilo(request):
+    return render(request, "buscar/vinilo.html")
+
+@require_http_methods(["GET", "POST"])
+def persona_create_admin(request):
+    if request.method == "POST":
+        form = PersonaForm(request.POST)
+        if form.is_valid():
+            obj = form.save()
+            Administrador.objects.create(
+                persona=obj,
+                cargo="Artista"   # Valor quemado
+            )
+            return redirect("core:persona_detail", pk=obj.pk)
+    else:
+         form = PersonaForm()
+    return render(request, "persona/form_admin.html", {"form": form, "mode": "create"})

@@ -1,0 +1,11 @@
+<h1>{% if mode == "edit" %}Editar{% else %}Crear{% endif %} Persona</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <label>Codigo Artista:</label>
+  <input type="text" name="cod" required>
+  <br>
+  <br>
+  <button type="submit">Guardar</button>
+</form>
+<a href="{% url 'core:persona_list' %}">Volver</a>

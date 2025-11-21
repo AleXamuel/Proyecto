@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Qué deseas buscar?</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4a148c, #7b1fa2);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            backdrop-filter: blur(6px);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .option {
+            display: block;
+            background: #ffffff;
+            color: #4a148c;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .option:hover {
+            background: #ce93d8;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>¿Qué deseas buscar?</h1>
+
+        <div class="options">
+            <a href="{% url 'core:buscar_cancion' %}" class="option">Canciones</a>
+            <a href="{% url 'core:buscar_lista' %}" class="option">Playlist</a>
+            <a href="{% url 'core:buscar_vinilo' %}" class="option">Vinilos</a>
+        </div>
+    </div>
+
+</body>
+</html>
