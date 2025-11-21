@@ -3,20 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Mis Canciones</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
+            background: #f4f4f4;
         }
+
         h1 {
             color: #5a189a;
+            margin-bottom: 25px;
         }
-        .song-card {
+
+        .song-box {
+            display: flex;
+            align-items: center;
+            background: white;
             padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
+            margin-bottom: 12px;
             border-radius: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            color: black;
         }
+
+        .song-box:hover {
+            background: #eee;
+            transform: scale(1.01);
+        }
+
+        .cover {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .song-name {
+            font-size: 18px;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .artist {
+            font-size: 16px;
+            color: #555;
+            text-align: right;
+            width: 150px;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: #5a189a;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .upload-btn:hover {
+            background: #7b2cbf;
+        }
+
     </style>
 </head>
 <body>
@@ -25,22 +78,24 @@
 
 {% if canciones %}
     {% for c in canciones %}
-        <div class="song-card">
-            <h3>{{ c.nombre }}</h3>
-            <p>Artista: {{ c.artista }}</p>
-            <p>Precio: ${{ c.precio }}</p>
+        <a href="{% url 'core:cancion_detail' c.pk %}" class="song-box">
 
             {% if c.caratula %}
-                <img src="{{ c.caratula.url }}" width="120">
+                <img src="{{ c.caratula.url }}" class="cover">
+            {% else %}
+                <img src="/static/no-cover.png" class="cover">
             {% endif %}
-        </div>
+
+            <div class="song-name">{{ c.nombre }}</div>
+            <div class="artist">{{ c.artista }}</div>
+
+        </a>
     {% endfor %}
 {% else %}
     <p>No tienes canciones registradas aún.</p>
 {% endif %}
 
-<br>
-<a href="{% url 'core:cancion_create' %}">Volver</a>
+<a href="{% url 'core:cancion_create' %}" class="upload-btn">Subir Canción</a>
 
 </body>
 </html>

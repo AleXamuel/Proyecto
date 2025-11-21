@@ -132,3 +132,24 @@ def cancion_list(request):
     return render(request, "cancion/list.html", {
         "canciones": canciones
     })
+
+@require_http_methods(["GET"])
+def cancion_detail(request, pk):
+    cancion = get_object_or_404(Cancion, pk=pk)
+    return render(request, "cancion/detail.html", {
+        "cancion": cancion
+    })
+
+@require_http_methods(["GET", "POST"])
+def cancion_update(request, pk):
+    cancion = get_object_or_404(Cancion, pk=pk)
+
+    if request.method == "POST":
+        form = CancionForm(request.POST, request.FILES, instance=cancion)
+        if form.is_valid():
+            form.save()
+            return redirect("core:cancion_detail", pk=cancion.pk)  # o lista
+    else:
+        form = CancionForm(instance=cancion)
+
+    return render(request, "cancion/form.html", {"form": form})

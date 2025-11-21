@@ -67,6 +67,7 @@ class Cancion(models.Model):
     artista = models.CharField(max_length=150)
     precio = models.FloatField()
     duracion = models.IntegerField()
+    genero = models.CharField(max_length=150, null=True)
     caratula = models.ImageField(upload_to="cancion/", null=True, blank=True)  
 
     class Meta:

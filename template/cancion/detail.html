@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ cancion.nombre }}</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background: #fafafa;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>{{ cancion.nombre }}</h1>
+
+    {% if cancion.caratula %}
+        <img src="{{ cancion.caratula.url }}">
+    {% endif %}
+
+    <p><b>Artista:</b> {{ cancion.artista }}</p>
+    <p><b>Precio:</b> ${{ cancion.precio }}</p>
+    <p><b>Duración:</b> {{ cancion.duracion }} segundos</p>
+    <p><b>Genero:</b> {{ cancion.genero }}</p>
+    <br>
+    <a href="{% url 'core:cancion_update' cancion.pk %}">Editar</a>
+    <br>
+    <a href="{% url 'core:cancion_list' %}">Volver</a>
+</div>
+
+</body>
+</html>
