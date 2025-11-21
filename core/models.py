@@ -12,8 +12,7 @@ class Persona(models.Model):
     telefono = models.CharField(max_length=20, blank=True, null=True)
     direccion = models.CharField(max_length=200, blank=True, null=True)
     fecha_registro = models.CharField(
-        max_length=10,
-        default=timezone.now
+        default=timezone.localdate
     )
 
     class Meta:

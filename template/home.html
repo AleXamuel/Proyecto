@@ -1,1 +1,21 @@
-<h1>{{title}}</h1>
+<h2>Iniciar sesión</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Usuario:</label>
+    <input type="text" name="username" required><br>
+
+    <label>Contraseña:</label>
+    <input type="password" name="password" required><br>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <button type="submit">Entrar</button>
+    <br>
+    <br>
+    <button onclick="window.location.href='/persona/new/'">Registrarse</button>
+
+
+</form>

@@ -3,11 +3,26 @@ from django.views.decorators.http import require_http_methods
 from .models import *
 from .forms import *
 def home(request):
-    return render(request, "home.html", {"title": "Hola!"})
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        try:
+            persona = Persona.objects.get(username=username, contrasena=password)
+            # Guardamos sesión para saber que el usuario está logueado
+            request.session["usuario_id"] = persona.id_persona
+            return render(request, "persona/list.html")  # Cambia por tu endpoint
+        except Persona.DoesNotExist:
+            return render(request, "home.html", {
+                "error": "Usuario o contraseña incorrectos."
+            })
+
+    return render(request, "home.html")
 #Persona
 def persona_list(request):
     qs = Persona.objects.all()
     return render(request, "persona/list.html", {"persona": qs})
+
 def persona_detail(request, pk):
     obj = get_object_or_404(Persona, pk=pk)
     usuario = obj.usuarios.all()
