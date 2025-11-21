@@ -132,7 +132,7 @@ def cancion_list(request):
     return render(request, "cancion/list.html", {
         "canciones": canciones
     })
-
+#require methods
 @require_http_methods(["GET"])
 def cancion_detail(request, pk):
     cancion = get_object_or_404(Cancion, pk=pk)
