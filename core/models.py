@@ -60,7 +60,6 @@ class Vinilo(models.Model):
     def __str__(self):
         return self.nombre
 
-
 class Cancion(models.Model):
     id_cancion = models.AutoField(primary_key=True)
     admin = models.ForeignKey(Administrador, on_delete=models.CASCADE, related_name="canciones")
@@ -68,14 +67,14 @@ class Cancion(models.Model):
     artista = models.CharField(max_length=150)
     precio = models.FloatField()
     duracion = models.IntegerField()
-    memoria = models.FloatField()
-    calidad = models.CharField(max_length=50)
+    caratula = models.ImageField(upload_to="cancion/", null=True, blank=True)  
 
     class Meta:
         db_table = "Cancion"
 
     def __str__(self):
         return self.nombre
+
 
 
 class Playlist(models.Model):

@@ -88,15 +88,14 @@
 </head>
 <body>
 
-    <!-- ⭐ Botón cuenta arriba a la derecha -->
     <div class="top-right">
-        <a href="{% url 'core:cuenta' %}" class="cuenta-btn">Cuenta</a>
+        <a href="{% url 'core:persona_detail' request.session.persona_id %}" class="cuenta-btn">Cuenta</a>
     </div>
 
     <div class="container">
         <h1>¿Qué deseas buscar?</h1>
         <div class="options">
-            <a href="{% url 'core:buscar_cancion' %}" class="option">Subir canción</a>
+            <a href="{% url 'core:cancion_create' %}" class="option">Subir canción</a>
             <a href="{% url 'core:buscar_lista' %}" class="option">Revisar canciones</a>
             <a href="{% url 'core:buscar_lista' %}" class="option">Revisar usuarios</a>
         </div>

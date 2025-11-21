@@ -1,4 +1,7 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
 from . import views
 
 
@@ -16,7 +19,9 @@ urlpatterns = [
     path("buscar/cancion/", views.buscar_cancion, name="buscar_cancion"),
     path("buscar/lista/", views.buscar_lista, name="buscar_lista"),
     path("buscar/vinilo/", views.buscar_vinilo, name="buscar_vinilo"),
-    path("cuenta/", views.cuenta, name="cuenta"),
-
-    
+    path("cancion/new/", views.cancion_create, name="cancion_create"),
+    path("opcion_usuario/", views.opcion_usuario, name="opcion_usuario"),
+    path("opcion_admin/", views.opcion_admin, name="opcion_admin"),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

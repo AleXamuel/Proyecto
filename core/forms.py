@@ -33,8 +33,8 @@ class CancionForm(forms.ModelForm):
     class Meta:
         model = Cancion
         fields = [
-            "admin", "nombre", "artista", "precio",
-            "duracion", "memoria", "calidad"
+            "nombre", "artista", "precio",
+            "duracion", "caratula"
         ]
 
 
