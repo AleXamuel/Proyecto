@@ -22,9 +22,11 @@ urlpatterns = [
     path("cancion/new/", views.cancion_create, name="cancion_create"),
     path("opcion_usuario/", views.opcion_usuario, name="opcion_usuario"),
     path("opcion_admin/", views.opcion_admin, name="opcion_admin"),
-    path("cancion/", views.cancion_list, name="cancion_list"),
+    path("cancion/", views.cancion_list_admin, name="cancion_list_admin"),
     path("cancion/<int:pk>/", views.cancion_detail, name="cancion_detail"),
     path("cancion/<int:pk>/edit/", views.cancion_update, name="cancion_update"),
+    path("cancionu/<int:pk>/", views.cancion_detail_usuario, name="cancion_detail_usuario"),
+    path("vinilo/new/", views.cancion_create, name="cancion_create"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

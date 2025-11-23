@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Buscar Vinilos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root{
+            --bg: #fafafa;
+            --card: #ffffff;
+            --accent: #0b76ef;
+            --muted: #666;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            max-width: 1000px;
+            margin: 28px auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        /* Botón en la esquina superior derecha */
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: transform .08s ease, box-shadow .08s ease;
+            background: transparent;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(11,118,239,0.12);
+            border: none;
+        }
+
+        .btn-primary:active { transform: translateY(1px); }
+        .btn-primary:focus { outline: none; box-shadow: 0 0 0 4px rgba(11,118,239,0.12); }
+
+        /* Card donde iría la lista (por ahora vacía) */
+        .card {
+            background: var(--card);
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+        }
+
+        .placeholder {
+            color: var(--muted);
+        }
+
+        /* responsive */
+        @media (max-width: 520px) {
+            .title { font-size: 18px; }
+            .btn { padding: 8px 10px; font-size: 13px; border-radius: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <div class="title">Buscar Vinilos</div>
+
+            <div class="actions">
+                <!-- Botón local: no llama a ningún endpoint ni tiene href/onclick -->
+                <a href="{% url 'core:vinilo_create' %}" class="btn btn-primary">Subir Vinilo</a>
+
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="placeholder">Aquí aparecerán los vinilos. (Por ahora solo está el botón <strong>Subir Vinilo</strong> arriba a la derecha.)</p>
+        </div>
+    </div>
+</body>
+</html>

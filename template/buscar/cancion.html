@@ -1,1 +1,79 @@
-<h1>Canciones</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Canciones</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background: #fafafa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .item:hover {
+            background: #f0f0f0;
+        }
+
+        .item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .left {
+            flex-grow: 1;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .right {
+            font-size: 16px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Buscar Canciones</h1>
+
+    {% for cancion in canciones %}
+        <a href="{% url 'core:cancion_detail_usuario' cancion.pk %}" style="text-decoration: none; color: inherit;">
+            <div class="item">
+                {% if cancion.caratula %}
+                    <img src="{{ cancion.caratula.url }}" alt="Carátula">
+                {% else %}
+                    <img src="https://via.placeholder.com/80">
+                {% endif %}
+
+                <div class="left">{{ cancion.nombre }}</div>
+                <div class="right">{{ cancion.artista }}</div>
+            </div>
+        </a>
+    {% empty %}
+        <p>No hay canciones disponibles.</p>
+    {% endfor %}
+</div>
+</body>
+</html>

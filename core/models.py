@@ -6,7 +6,7 @@ class Persona(models.Model):
     id_persona = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    username = models.CharField(max_length=100)
+    username = models.CharField(max_length=100,unique=True)
     contrasena = models.CharField(max_length=100)
     correo = models.EmailField(max_length=150, unique=True)
     telefono = models.CharField(max_length=20, blank=True, null=True)

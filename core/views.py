@@ -9,16 +9,21 @@ def home(request):
         password = request.POST.get("password")
 
         try:
-            persona = Persona.objects.get(username=username, contrasena=password)
+            persona = Persona.objects.filter(username=username, contrasena=password).first()
             request.session["persona_id"] = persona.id_persona
             if Administrador.objects.filter(persona=persona).exists():
                 admin_obj = Administrador.objects.get(persona=persona)
                 request.session["admin_id"] = admin_obj.id_admin
                 return redirect("core:opcion_admin") 
-            user_obj = Usuario.objects.get(persona=persona)
-            request.session["user_id"] = user_obj.id_usuario
-            return redirect("core:opcion_usuario")  
-        except Persona.DoesNotExist:
+            try:
+                user_obj = Usuario.objects.get(persona=persona)
+                request.session["user_id"] = user_obj.id_usuario
+                return redirect("core:opcion_usuario")  
+            except Usuario.DoesNotExist:
+                return render(request, "home.html", {
+                    "error": "Usuario o contraseña incorrectos."
+                })
+        except:
             return render(request, "home.html", {
                 "error": "Usuario o contraseña incorrectos."
             })
@@ -50,7 +55,7 @@ def persona_create(request):
                 persona=obj,
                 estado="activo"
             )
-            return redirect("core:home", pk=obj.pk)
+            return redirect("core:home")
     else:
          form = PersonaForm()
     return render(request, "persona/form.html", {"form": form, "mode": "create"})
@@ -72,7 +77,7 @@ def persona_delete(request, pk):
     obj = get_object_or_404(Persona, pk=pk)
     if request.method == "POST":
          obj.delete()
-         return redirect("core:persona_list")
+         return redirect("core:home")
     return render(request, "persona/delete.html", {"persona": obj})
 
 #Create de admin
@@ -86,14 +91,15 @@ def persona_create_admin(request):
                 persona=obj,
                 cargo="Artista"   # Valor quemado
             )
-            return redirect("core:home", pk=obj.pk)
+            return redirect("core:home")
     else:
          form = PersonaForm()
     return render(request, "persona/form_admin.html", {"form": form, "mode": "create"})
 
 #Metodos de segunda pagina de usuario
 def buscar_cancion(request):
-    return render(request, "buscar/cancion.html")
+    canciones = Cancion.objects.all()
+    return render(request, "buscar/cancion.html", {"canciones": canciones})
 def buscar_lista(request):
     return render(request, "buscar/lista.html")
 def buscar_vinilo(request):
@@ -123,7 +129,7 @@ def cancion_create(request):
     })
 
 @require_http_methods(["GET"])
-def cancion_list(request):
+def cancion_list_admin(request):
     admin_id = request.session.get("admin_id")
     if not admin_id:
         return redirect("core:home")
@@ -137,6 +143,12 @@ def cancion_list(request):
 def cancion_detail(request, pk):
     cancion = get_object_or_404(Cancion, pk=pk)
     return render(request, "cancion/detail.html", {
+        "cancion": cancion
+    })
+@require_http_methods(["GET"])
+def cancion_detail_usuario(request, pk):
+    cancion = get_object_or_404(Cancion, pk=pk)
+    return render(request, "cancion/detail_usuario.html", {
         "cancion": cancion
     })
 
