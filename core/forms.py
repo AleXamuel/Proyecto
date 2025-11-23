@@ -23,11 +23,18 @@ class AdministradorForm(forms.ModelForm):
         model = Administrador
         fields = ["persona", "cargo"]
 
-
 class ViniloForm(forms.ModelForm):
+    canciones = forms.ModelMultipleChoiceField(
+        queryset=Cancion.objects.all(),
+        widget=forms.SelectMultiple(attrs={'class': 'select2'}),
+        required=False
+    )
+
     class Meta:
         model = Vinilo
-        fields = ["usuario", "nombre", "precio", "imagen_caratula", "descripcion"]
+        fields = ['nombre', 'precio', 'caratula', 'descripcion', 'canciones']
+
+
 
 
 class CancionForm(forms.ModelForm):

@@ -1,0 +1,78 @@
+{% block content %}
+<h1>Mis Vinilos</h1>
+
+<style>
+    .vinilos-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin-top: 20px;
+    }
+
+    .vinilo-card {
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        transition: transform 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+    .vinilo-card:hover {
+        transform: scale(1.03);
+        border-color: #5a189a;
+    }
+
+    .vinilo-img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    .vinilo-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .vinilo-name {
+        text-align: left;
+    }
+
+    .vinilo-price {
+        text-align: right;
+        color: #5a189a;
+    }
+
+    .empty-message {
+        margin-top: 40px;
+        font-size: 20px;
+        text-align: center;
+        color: #777;
+    }
+</style>
+
+{% if vinilos %}
+    <div class="vinilos-grid">
+        {% for vinilo in vinilos %}
+            <a href="{% url 'core:vinilo_detail' vinilo.pk %}" style="text-decoration:none; color:inherit;">
+                <div class="vinilo-card">
+
+                    <img src="{{ vinilo.caratula.url }}" class="vinilo-img" alt="{{ vinilo.nombre }}">
+
+                    <div class="vinilo-info">
+                        <span class="vinilo-name">{{ vinilo.nombre }}</span>
+                        <span class="vinilo-price">${{ vinilo.precio }}</span>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="empty-message">Aún no has creado ningún vinilo.</p>
+{% endif %}
+
+{% endblock %}

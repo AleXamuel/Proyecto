@@ -168,13 +168,44 @@ def cancion_update(request, pk):
 #Vinilo
 @require_http_methods(["GET", "POST"])
 def vinilo_create(request):
+    user  = request.session.get("user_id")
     if request.method == "POST":
         form = ViniloForm(request.POST, request.FILES)
+        usuario = Usuario.objects.get(pk=user)
         if form.is_valid():
-            form.save()
-            # Después de guardar, redirige a sí mismo
-            return redirect('vinilo_create')  # <–– nombre de la URL a esta misma vista
+            vinilo = form.save(commit=False)
+            vinilo.usuario = usuario
+            vinilo.save()
+            # Guardar canciones seleccionadas en la tabla intermedia
+            canciones = form.cleaned_data['canciones']
+            for cancion in canciones:
+                ContenidoVinilos.objects.create(
+                    vinilo=vinilo,
+                    cancion=cancion
+                )
+
+            return redirect('core:vinilo_create')
+
     else:
         form = ViniloForm()
 
     return render(request, 'vinilo/form.html', {'form': form})
+
+@require_http_methods(["GET"])
+def vinilo_list(request):
+    canciones = Vinilo.objects.all()
+    return render(request, "vinilo/list.html", {"vinilos": canciones})
+@require_http_methods(["GET"])
+def vinilo_list_user(request):
+    user_id = request.session.get("user_id")
+    user = Usuario.objects.get(pk=user_id)
+    vinilos = Vinilo.objects.filter(usuario=user)
+    return render(request, "vinilo/list_user.html", {
+        "vinilos": vinilos
+    })
+@require_http_methods(["GET"])
+def vinilo_detail(request, pk):
+    cancion = get_object_or_404(Vinilo, pk=pk)
+    return render(request, "vinilo/detail.html", {
+        "vinilo": cancion
+    })

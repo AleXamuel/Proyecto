@@ -29,6 +29,7 @@ urlpatterns = [
     path("vinilo/new/", views.vinilo_create, name="vinilo_create"),
     path("vinilo/lista/", views.vinilo_list, name="vinilo_list"),
     path("vinilo/listau/", views.vinilo_list_user, name="vinilo_list_user"),
+    path("vinilo/<int:pk>/", views.vinilo_detail, name="vinilo_detail"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

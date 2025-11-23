@@ -51,8 +51,9 @@ class Vinilo(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="vinilos")
     nombre = models.CharField(max_length=150)
     precio = models.FloatField()
-    imagen_caratula = models.CharField(max_length=255, blank=True, null=True)
+    caratula = models.ImageField(upload_to="vinilo/", null=True, blank=True)  
     descripcion = models.TextField(blank=True, null=True)
+    canciones = models.ManyToManyField('Cancion', through='ContenidoVinilos')
 
     class Meta:
         db_table = "Vinilo"
@@ -103,15 +104,10 @@ class ContenidoPlaylist(models.Model):
 
 
 class ContenidoVinilos(models.Model):
-    id_contenido_playlist = models.AutoField(primary_key=True)
     vinilo = models.ForeignKey(Vinilo, on_delete=models.CASCADE, related_name="contenidos")
-    cancion = models.ForeignKey(Cancion, on_delete=models.CASCADE, related_name="contenidos_vinilos")
-
+    cancion = models.ForeignKey(Cancion, on_delete=models.CASCADE, related_name="canciones")
     class Meta:
         db_table = "ContenidoVinilos"
-
-    def __str__(self):
-        return f"ContenidoVinilos {self.id_contenido_playlist}"
 
 
 class Compra(models.Model):
