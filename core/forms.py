@@ -2,6 +2,7 @@ from django import forms
 from django import forms
 from .models import *
 
+#Add CRUD ModelForms for main entities
 class PersonaForm(forms.ModelForm):
     class Meta:
         model = Persona
