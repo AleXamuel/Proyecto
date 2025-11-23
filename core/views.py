@@ -165,3 +165,16 @@ def cancion_update(request, pk):
         form = CancionForm(instance=cancion)
 
     return render(request, "cancion/form.html", {"form": form})
+#Vinilo
+@require_http_methods(["GET", "POST"])
+def vinilo_create(request):
+    if request.method == "POST":
+        form = ViniloForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # Después de guardar, redirige a sí mismo
+            return redirect('vinilo_create')  # <–– nombre de la URL a esta misma vista
+    else:
+        form = ViniloForm()
+
+    return render(request, 'vinilo/form.html', {'form': form})

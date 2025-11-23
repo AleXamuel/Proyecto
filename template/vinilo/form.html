@@ -1,0 +1,12 @@
+<!-- vinilo_create.html -->
+<h1>Crear vinilo</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar y crear otro</button>
+</form>
+
+<a href="{% url 'vinilos_list' %}">Ver vinilos</a>
+<br>
+<a href="{% url 'vinilos_list_user' %}">Ver tus vinilos</a>

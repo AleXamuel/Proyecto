@@ -26,7 +26,9 @@ urlpatterns = [
     path("cancion/<int:pk>/", views.cancion_detail, name="cancion_detail"),
     path("cancion/<int:pk>/edit/", views.cancion_update, name="cancion_update"),
     path("cancionu/<int:pk>/", views.cancion_detail_usuario, name="cancion_detail_usuario"),
-    path("vinilo/new/", views.cancion_create, name="cancion_create"),
+    path("vinilo/new/", views.vinilo_create, name="vinilo_create"),
+    path("vinilo/lista/", views.vinilo_list, name="vinilo_list"),
+    path("vinilo/listau/", views.vinilo_list_user, name="vinilo_list_user"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
