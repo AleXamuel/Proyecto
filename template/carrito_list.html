@@ -1,5 +1,4 @@
 {% block content %}
-
 <head>
     <title>PoliSongStock - Carrito</title>
 </head>
@@ -11,30 +10,38 @@
         <div class="title">Mi Carrito 🛒</div>
 
         <div class="actions">
+
+            <!-- NUEVOS BOTONES -->
+            <a href="{% url 'core:buscar_cancion' %}" class="btn btn-primary">
+                Canciones
+            </a>
+
+            <a href="{% url 'core:vinilo_list' %}" class="btn btn-primary">
+                Vinilos
+            </a>
+
+            <!-- BOTÓN CUENTA (ya existente) -->
             <a href="{% url 'core:persona_detail' request.session.persona_id %}" class="btn btn-primary">
                 Cuenta
             </a>
         </div>
     </div>
 
+    <!-- =========================== -->
+    <!-- SECCIÓN DE VINILOS -->
+    <!-- =========================== -->
 
-    <!-- =========================== -->
-    <!--   SECCIÓN DE VINILOS       -->
-    <!-- =========================== -->
     <h2 class="section-title">Vinilos</h2>
 
     <div class="card">
         {% if vinilos %}
         <div class="vinilos-grid">
-
             {% for item in vinilos %}
-
             <div class="vinilo-card">
 
                 <a href="{% url 'core:vinilo_detail' item.vinilo.pk %}" style="text-decoration:none; color:inherit;">
                     {% if item.vinilo.caratula %}
-                    <img src="{{ item.vinilo.caratula.url }}" class="vinilo-img"
-                        alt="Carátula de {{ item.vinilo.nombre }}">
+                    <img src="{{ item.vinilo.caratula.url }}" class="vinilo-img" alt="Carátula de {{ item.vinilo.nombre }}">
                     {% endif %}
 
                     <div class="vinilo-info">
@@ -46,69 +53,55 @@
                 <!-- BOTÓN ELIMINAR -->
                 <form method="POST" action="{% url 'core:carrito_eliminar_vinilo' item.id_carrito_vinilo %}">
                     {% csrf_token %}
-                    <button class="btn-delete">
-                        Eliminar ❌
-                    </button>
+                    <button class="btn-delete">Eliminar ❌</button>
                 </form>
 
             </div>
-
             {% endfor %}
-
         </div>
         {% else %}
         <p class="empty-message">No tienes vinilos en el carrito.</p>
         {% endif %}
     </div>
 
+    <!-- =========================== -->
+    <!-- SECCIÓN DE CANCIONES -->
+    <!-- =========================== -->
 
-    <!-- =========================== -->
-    <!--   SECCIÓN DE CANCIONES     -->
-    <!-- =========================== -->
     <h2 class="section-title">Canciones</h2>
 
     {% if canciones %}
-    {% for item in canciones %}
+        {% for item in canciones %}
+        <div class="song-wrapper">
 
-    <div class="song-wrapper">
+            <a href="{% url 'core:cancion_detail_usuario' item.cancion.pk %}" class="song-box">
+                {% if item.cancion.caratula %}
+                <img src="{{ item.cancion.caratula.url }}" class="cover">
+                {% else %}
+                <img src="/static/no-cover.png" class="cover">
+                {% endif %}
 
-        <a href="{% url 'core:cancion_detail_usuario' item.cancion.pk %}" class="song-box">
+                <div class="song-name">{{ item.cancion.nombre }}</div>
+                <div class="artist">{{ item.cancion.artista }}</div>
+            </a>
 
-            {% if item.cancion.caratula %}
-            <img src="{{ item.cancion.caratula.url }}" class="cover">
-            {% else %}
-            <img src="/static/no-cover.png" class="cover">
-            {% endif %}
+            <!-- BOTÓN ELIMINAR -->
+            <form method="POST" action="{% url 'core:carrito_eliminar_cancion' item.id_carrito_cancion %}" style="text-align:center;">
+                {% csrf_token %}
+                <button class="btn-delete" style="width:60vw; max-width:900px;">Eliminar ❌</button>
+            </form>
 
-            <div class="song-name">{{ item.cancion.nombre }}</div>
-            <div class="artist">{{ item.cancion.artista }}</div>
-
-        </a>
-
-        <!-- BOTÓN ELIMINAR -->
-        <form method="POST" action="{% url 'core:carrito_eliminar_cancion' item.id_carrito_cancion %}" style="text-align:center;">
-            {% csrf_token %}
-            <button class="btn-delete" style="width:60vw; max-width:900px;">
-                Eliminar ❌
-            </button>
-        </form>
-
-    </div>
-
-    {% endfor %}
+        </div>
+        {% endfor %}
     {% else %}
-    <p class="empty-message" style="text-align:center;">
-        No tienes canciones en el carrito.
-    </p>
+        <p class="empty-message" style="text-align:center;">No tienes canciones en el carrito.</p>
     {% endif %}
-
 
     <!-- BOTÓN PAGAR -->
     <div style="position: fixed; bottom: 25px; right: 25px;">
         <form method="POST" action="{% url 'core:carrito_pagar' %}">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary"
-                style="padding: 12px 25px; font-size: 18px; border-radius: 12px;">
+            <button type="submit" class="btn btn-primary" style="padding: 12px 25px; font-size: 18px; border-radius: 12px;">
                 Pagar 💳
             </button>
         </form>
@@ -116,179 +109,199 @@
 
 </div>
 
-
 <!-- ======================= -->
-<!--     ESTILOS UNIFICADOS  -->
+<!-- ESTILOS UNIFICADOS -->
 <!-- ======================= -->
 <style>
-    :root {
-        --bg: #e8eef7;
-        --card: #ffffff;
-        --accent: #1e3a8a;
-        --accent-light: #2c55d3;
-        --muted: #475569;
-        --danger: #dc2626;
-    }
 
-    html,
-    body {
-        margin: 0;
-        font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-        background: var(--bg);
-    }
+:root {
+    --bg: #e8eef7;
+    --card: #ffffff;
+    --accent: #1e3a8a;
+    --accent-light: #2c55d3;
+    --muted: #475569;
+    --danger: #dc2626;
+}
 
-    .page {
-        max-width: 1000px;
-        margin: 28px auto;
-        padding: 20px;
-    }
+html, body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+}
 
-    /* HEADER */
-    .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
+.page {
+    max-width: 1000px;
+    margin: 28px auto;
+    padding: 20px;
+}
 
-    .title {
-        font-size: 24px;
-        font-weight: 700;
-        color: var(--accent);
-    }
+/* HEADER */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
 
-    .section-title {
-        font-size: 22px;
-        margin-top: 35px;
-        margin-bottom: 10px;
-        font-weight: bold;
-        color: #1e293b;
-    }
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+}
 
-    .actions .btn {
-        padding: 9px 15px;
-        border-radius: 10px;
-        text-decoration: none;
-        font-weight: 600;
-        background: var(--accent);
-        color: white;
-        box-shadow: 0 6px 18px rgba(30, 58, 138, 0.18);
-    }
+.actions {
+    display: flex;
+    gap: 10px;
+}
 
-    .btn:hover {
-        background: var(--accent-light);
-    }
+/* NEW BUTTONS */
+.btn-secondary {
+    padding: 9px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    background: #64748b;
+    color: white;
+    box-shadow: 0 6px 18px rgba(100, 116, 139, 0.18);
+}
 
-    /* GRID VINILOS */
-    .vinilos-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 25px;
-        margin-top: 15px;
-    }
+.btn-secondary:hover {
+    background: #475569;
+}
 
-    .vinilo-card {
-        background: var(--card);
-        border: 1px solid #c7d2fe;
-        border-radius: 14px;
-        padding: 15px;
-        text-align: center;
-        transition: 0.15s;
-    }
+.actions .btn-primary {
+    padding: 9px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 6px 18px rgba(30, 58, 138, 0.18);
+}
 
-    .vinilo-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 24px rgba(30, 58, 138, 0.15);
-    }
+.btn-primary:hover {
+    background: var(--accent-light);
+}
 
-    .vinilo-img {
-        width: 100%;
-        height: 260px;
-        object-fit: cover;
-        border-radius: 12px;
-        margin-bottom: 12px;
-    }
+.section-title {
+    font-size: 22px;
+    margin-top: 35px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #1e293b;
+}
 
-    .vinilo-info {
-        display: flex;
-        justify-content: space-between;
-        font-weight: 600;
-    }
+/* VINILOS GRID */
+.vinilos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 15px;
+}
 
-    .vinilo-price {
-        color: var(--accent);
-    }
+.vinilo-card {
+    background: var(--card);
+    border: 1px solid #c7d2fe;
+    border-radius: 14px;
+    padding: 15px;
+    text-align: center;
+    transition: 0.15s;
+}
 
-    .empty-message {
-        padding: 40px;
-        text-align: center;
-        color: var(--muted);
-    }
+.vinilo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(30, 58, 138, 0.15);
+}
 
-    /* CANCIONES LIST */
-    .song-box {
-        display: flex;
-        align-items: center;
-        background: white;
-        padding: 15px;
-        margin: 12px auto;
-        border-radius: 12px;
-        border: 1px solid #c8d3e8;
-        text-decoration: none;
-        color: black;
-        width: 60vw;
-        max-width: 900px;
-        transition: 0.2s;
-    }
+.vinilo-img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
 
-    .song-box:hover {
-        background: #f2f6ff;
-        transform: scale(1.01);
-    }
+.vinilo-info {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
 
-    .song-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.vinilo-price {
+    color: var(--accent);
+}
 
-    .cover {
-        width: 70px;
-        height: 70px;
-        border-radius: 8px;
-        object-fit: cover;
-        margin-right: 15px;
-        border: 1px solid #ddd;
-    }
+.empty-message {
+    padding: 40px;
+    text-align: center;
+    color: var(--muted);
+}
 
-    .song-name {
-        font-weight: bold;
-        font-size: 18px;
-        flex: 1;
-    }
+/* CANCIONES LIST */
+.song-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    margin: 12px auto;
+    border-radius: 12px;
+    border: 1px solid #c8d3e8;
+    text-decoration: none;
+    color: black;
+    width: 60vw;
+    max-width: 900px;
+    transition: 0.2s;
+}
 
-    .artist {
-        color: #555;
-        width: 150px;
-        text-align: right;
-    }
+.song-box:hover {
+    background: #f2f6ff;
+    transform: scale(1.01);
+}
 
-    /* BOTÓN ELIMINAR */
-    .btn-delete {
-        background: var(--danger);
-        color: white;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 15px;
-        margin-top: 8px;
-        width: 100%;
-    }
+.song-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    .btn-delete:hover {
-        background: #b91c1c;
-    }
+.cover {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 1px solid #ddd;
+}
+
+.song-name {
+    font-weight: bold;
+    font-size: 18px;
+    flex: 1;
+}
+
+.artist {
+    color: #555;
+    width: 150px;
+    text-align: right;
+}
+
+/* BOTÓN ELIMINAR */
+.btn-delete {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.btn-delete:hover {
+    background: #b91c1c;
+}
+
 </style>
 
 {% endblock %}
