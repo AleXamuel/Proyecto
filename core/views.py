@@ -50,14 +50,24 @@ def persona_create(request):
     if request.method == "POST":
         form = PersonaForm(request.POST)
         if form.is_valid():
+            # Crear persona
             obj = form.save()
-            Usuario.objects.create(
+            
+            # Crear usuario
+            usuario = Usuario.objects.create(
                 persona=obj,
                 estado="activo"
             )
+
+            # Crear carrito asociado automáticamente
+            Carrito.objects.create(
+                usuario=usuario
+            )
+
             return redirect("core:home")
     else:
-         form = PersonaForm()
+        form = PersonaForm()
+
     return render(request, "persona/form.html", {"form": form, "mode": "create"})
 
 @require_http_methods(["GET", "POST"])
