@@ -371,6 +371,59 @@ def compra_detail(request, compra_id):
         "vinilos": vinilos,
         "canciones": canciones
     })
+def venta_list(request):
 
+    user_id = request.session.get("user_id")
+    admin_id = request.session.get("admin_id")
+
+    ventas = []
+
+    # ------------------------------
+    # USUARIO NORMAL → VENTAS DE VINILOS
+    # ------------------------------
+    if user_id:
+        usuario = get_object_or_404(Usuario, id_usuario=user_id)
+
+        compras_vinilos = CompraVinilo.objects.filter(
+            vinilo__usuario=usuario
+        ).select_related("compra")  
+
+        compras_unicas = {cv.compra for cv in compras_vinilos}
+
+        ventas = sorted(list(compras_unicas), key=lambda x: x.id_compra, reverse=True)
+
+    # ------------------------------
+    # ADMINISTRADOR → VENTAS DE CANCIONES
+    # ------------------------------
+    elif admin_id:
+        admin = get_object_or_404(Administrador, id_admin=admin_id)
+
+        compras_canciones = CompraCancion.objects.all().select_related("compra")
+
+        compras_unicas = {cc.compra for cc in compras_canciones}
+
+        ventas = sorted(list(compras_unicas), key=lambda x: x.id_compra, reverse=True)
+
+    else:
+        return render(request, "core/error.html", {
+            "mensaje": "Sesión no encontrada"
+        })
+
+    return render(request, "venta/list.html", {
+        "ventas": ventas
+    })
+
+def venta_detail(request, id_compra):
+    compra = get_object_or_404(Compra, id_compra=id_compra)
+
+    # Elementos vendidos en esa compra
+    vinilos = CompraVinilo.objects.filter(compra=compra)
+    canciones = CompraCancion.objects.filter(compra=compra)
+
+    return render(request, "venta/detail.html", {
+        "compra": compra,
+        "vinilos": vinilos,
+        "canciones": canciones,
+    })
 
 

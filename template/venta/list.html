@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial; background: #eef3ff; padding: 20px; }
+        .item { margin-bottom: 15px; padding: 15px; background: white; border-radius: 10px; }
+        .item a { text-decoration: none; color: #003A70; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h1>Historial de Ventas</h1>
+
+{% if ventas %}
+    {% for compra in ventas %}
+        <div class="item">
+            <a href="{% url 'core:venta_detail' compra.id_compra %}">
+                Venta #{{ forloop.counter }} — {{ compra.fecha }}  
+                <br>
+                Total: ${{ compra.total }}
+            </a>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No tienes ventas registradas.</p>
+{% endif %}
+
+</body>
+</html>
