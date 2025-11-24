@@ -1,7 +1,125 @@
-<h1>{% if mode == "edit" %}Editar{% else %}Crear{% endif %} Persona</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Guardar</button>
-</form>
-<a href="javascript:history.back()">Volver</a>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PoliSongStock</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f6ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #003A70;
+        }
+
+        /* Botón cuenta */
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .cuenta-btn {
+            background: #0078B5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: 0.2s ease;
+        }
+
+        .cuenta-btn:hover {
+            background: #005F8A;
+            transform: translateY(-2px);
+        }
+
+        /* Caja principal */
+        .container {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border: 2px solid #0078B5;
+            text-align: center;
+        }
+
+        h1 {
+            color: #003A70;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #0078B5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #005F8A;
+        }
+
+        .btn-secondary {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            background: #003A70;
+            color: white;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: #002B52;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Botón Cuenta -->
+    
+
+    <div class="container">
+        <h1>
+            {% if mode == "edit" %}
+                Editar Persona
+            {% else %}
+                Crear Persona
+            {% endif %}
+        </h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guardar</button>
+        </form>
+
+        <a href="javascript:history.back()" class="btn-secondary">Volver</a>
+    </div>
+
+</body>
+</html>

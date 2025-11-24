@@ -1,7 +1,126 @@
 {% block content %}
-<h1>Mis Vinilos</h1>
+<head>
+    <title>PoliSongStock - Mis Vinilos</title>
+</head>
+<div class="page">
+
+    <!-- ENCABEZADO -->
+    <div class="header">
+        <div class="title">Mis Vinilos</div>
+
+        <div class="actions">
+            <a href="{% url 'core:vinilo_create' %}" class="btn btn-primary">
+                Subir Vinilo
+            </a>
+            <a href="{% url 'core:persona_detail' request.session.persona_id %}" class="btn btn-primary">
+                Cuenta
+            </a>
+        </div>
+    </div>
+    
+
+    <!-- CONTENIDO -->
+    <div class="card">
+
+        {% if vinilos %}
+        <div class="vinilos-grid">
+
+            {% for vinilo in vinilos %}
+                <a href="{% url 'core:vinilo_detail_user' vinilo.pk %}" 
+                   style="text-decoration:none; color:inherit;">
+                    
+                    <div class="vinilo-card">
+
+                        {% if vinilo.caratula %}
+                        <img src="{{ vinilo.caratula.url }}"
+                             class="vinilo-img"
+                             alt="Carátula de {{ vinilo.nombre }}">
+                        {% endif %}
+
+                        <div class="vinilo-info">
+                            <span>{{ vinilo.nombre }}</span>
+                            <span class="vinilo-price">${{ vinilo.precio }}</span>
+                        </div>
+
+                    </div>
+                </a>
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+            <p class="empty-message">Aún no has creado ningún vinilo.</p>
+        {% endif %}
+
+    </div>
+
+</div>
 
 <style>
+    :root{
+        --bg: #e8eef7;          /* azul muy claro */
+        --card: #ffffff;
+        --accent: #1e3a8a;      /* azul oscuro */
+        --accent-light: #2c55d3;
+        --muted: #475569;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+        background: var(--bg);
+    }
+
+    .page {
+        max-width: 1000px;
+        margin: 28px auto;
+        padding: 20px;
+    }
+
+    /* HEADER */
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--accent);
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* BOTONES */
+    .btn {
+        padding: 9px 15px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .btn-primary {
+        background: var(--accent);
+        color: white;
+        box-shadow: 0 6px 18px rgba(30,58,138,0.18);
+    }
+
+    .btn-primary:hover {
+        background: var(--accent-light);
+    }
+
+    /* GRID */
     .vinilos-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -10,69 +129,82 @@
     }
 
     .vinilo-card {
-        border: 1px solid #ccc;
+        background: var(--card);
+        border: 1px solid #c7d2fe;
+        border-radius: 14px;
         padding: 15px;
-        border-radius: 8px;
         text-align: center;
-        transition: transform 0.2s ease-in-out;
         cursor: pointer;
+        transition: transform .15s ease, box-shadow .15s ease;
     }
 
     .vinilo-card:hover {
-        transform: scale(1.03);
-        border-color: #5a189a;
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px rgba(30,58,138,0.15);
     }
 
     .vinilo-img {
         width: 100%;
-        height: 300px;
+        height: 260px;
         object-fit: cover;
-        border-radius: 6px;
-        margin-bottom: 10px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        border: 1px solid #d4dcf7;
     }
 
     .vinilo-info {
         display: flex;
         justify-content: space-between;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .vinilo-name {
-        text-align: left;
+        padding: 0 5px;
+        font-weight: 600;
+        color: #1e293b;
     }
 
     .vinilo-price {
-        text-align: right;
-        color: #5a189a;
+        color: var(--accent);
     }
 
+    /* MENSAJE VACÍO */
     .empty-message {
-        margin-top: 40px;
-        font-size: 20px;
+        padding: 40px;
         text-align: center;
-        color: #777;
+        color: var(--muted);
     }
+
+    /* RESPONSIVE */
+    @media (max-width: 760px) {
+        .vinilos-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 520px) {
+        .vinilos-grid {
+            grid-template-columns: 1fr;
+        }
+        .title { font-size: 20px; }
+    }
+    .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .cuenta-btn {
+            background: #0078B5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: 0.2s ease;
+        }
+
+        .cuenta-btn:hover {
+            background: #005F8A;
+            transform: translateY(-2px);
+        }
 </style>
-
-{% if vinilos %}
-    <div class="vinilos-grid">
-        {% for vinilo in vinilos %}
-            <a href="{% url 'core:vinilo_detail' vinilo.pk %}" style="text-decoration:none; color:inherit;">
-                <div class="vinilo-card">
-
-                    <img src="{{ vinilo.caratula.url }}" class="vinilo-img" alt="{{ vinilo.nombre }}">
-
-                    <div class="vinilo-info">
-                        <span class="vinilo-name">{{ vinilo.nombre }}</span>
-                        <span class="vinilo-price">${{ vinilo.precio }}</span>
-                    </div>
-                </div>
-            </a>
-        {% endfor %}
-    </div>
-{% else %}
-    <p class="empty-message">Aún no has creado ningún vinilo.</p>
-{% endif %}
 
 {% endblock %}

@@ -8,38 +8,97 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <style>
+        :root{
+            --bg: #e8eef7;          /* azul muy claro */
+            --card: #ffffff;
+            --accent: #1e3a8a;      /* azul oscuro */
+            --accent-light: #2c55d3;
+            --muted: #475569;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px auto;
-            max-width: 600px;
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background: var(--bg);
         }
 
         h1 {
-            color: #444;
-            margin-bottom: 20px;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 26px;
         }
 
-        form {
-            padding: 20px;
-            border: 1px solid #bbb;
-            border-radius: 8px;
-            background: #fafafa;
+        /* Tarjeta */
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background: var(--card);
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(30,58,138,0.12);
+            border: 1px solid #c7d2fe;
         }
 
         label {
-            font-weight: bold;
+            font-weight: 600;
             display: block;
-            margin-top: 10px;
+            margin: 14px 0 5px;
+            color: #1e293b;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(30,58,138,0.15);
         }
 
         .submit-btn {
-            margin-top: 20px;
-            padding: 12px 18px;
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            background: var(--accent);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-light);
+        }
+
+        /* links */
+        .links {
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
             font-size: 15px;
         }
 
-        .links {
-            margin-top: 20px;
+        .links a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -48,35 +107,35 @@
 
 <h1>Crear Vinilo</h1>
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+<div class="form-container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
 
-    {{ form.non_field_errors }}
+        {{ form.non_field_errors }}
 
-    {% for field in form %}
-        {% if field.name != "canciones" %}
-            <p>
+        {% for field in form %}
+            {% if field.name != "canciones" %}
                 <label>{{ field.label }}</label>
                 {{ field }}
                 {% if field.errors %}
-                    <div style="color: red">{{ field.errors }}</div>
+                    <div style="color: red; margin-top:5px;">{{ field.errors }}</div>
                 {% endif %}
-            </p>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Selector con buscador -->
+        <label for="id_canciones">Canciones</label>
+        {{ form.canciones }}
+        {% if form.canciones.errors %}
+            <div style="color: red; margin-top:5px;">{{ form.canciones.errors }}</div>
         {% endif %}
-    {% endfor %}
 
-    <!-- Selector con buscador -->
-    <label for="id_canciones">Canciones</label>
-    {{ form.canciones }}
-    {% if form.canciones.errors %}
-        <div style="color: red">{{ form.canciones.errors }}</div>
-    {% endif %}
-
-    <button class="submit-btn" type="submit">Guardar</button>
-</form>
+        <button class="submit-btn" type="submit">Guardar</button>
+    </form>
+</div>
 
 <div class="links">
-    <a href="{% url 'core:vinilo_list' %}">Ver vinilos</a><br>
+    <a href="{% url 'core:vinilo_list' %}">Ver vinilos</a> |
     <a href="{% url 'core:vinilo_list_user' %}">Ver tus vinilos</a>
 </div>
 

@@ -1,24 +1,122 @@
-<h2>Iniciar sesión</h2>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PoliSongStock</title>
 
-<form method="POST">
-    {% csrf_token %}
-    <label>Usuario:</label>
-    <input type="text" name="username" required><br>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5faff;
+            margin: 0;
+            padding: 0;
+        }
 
-    <label>Contraseña:</label>
-    <input type="password" name="password" required><br>
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 80px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 60, 110, 0.15);
+            text-align: center;
+        }
 
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
-    {% endif %}
+        h1 {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #003A70; /* Azul institucional */
+        }
 
-    <button type="submit">Entrar</button>
-    <br>
-    <br>
-    <button onclick="window.location.href='/persona/new/'">Registrarse</button>
-    <br>
-    <br>
-    <button onclick="window.location.href='/persona/admin/'">Registrarse como artista</button>
+        h2 {
+            color: #003A70;
+            margin-bottom: 20px;
+        }
 
+        label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #003A70;
+        }
 
-</form>
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 4px;
+            border: 1px solid #0078B5;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #0078B5;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #005F8A;
+        }
+
+        .secondary-btn {
+            background: #003A70;
+        }
+
+        .secondary-btn:hover {
+            background: #002B52;
+        }
+
+        p.error {
+            color: red;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>Bienvenido a PoliSongStock</h1>
+
+    <div class="container">
+        <h2>Iniciar sesión</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Usuario:</label>
+            <input type="text" name="username" required>
+
+            <label>Contraseña:</label>
+            <input type="password" name="password" required>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+
+            <button type="submit">Entrar</button>
+
+            <button type="button" class="secondary-btn" onclick="window.location.href='/persona/new/'">
+                Registrarse
+            </button>
+
+            <button type="button" onclick="window.location.href='/persona/admin/'">
+                Registrarse como artista
+            </button>
+
+        </form>
+    </div>
+
+</body>
+</html>

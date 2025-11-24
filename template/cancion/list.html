@@ -2,37 +2,48 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mis Canciones</title>
+    <title>PoliSongStock - Mis Canciones</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
-            background: #f4f4f4;
+            background: #e8eef7; /* azul claro suave */
+            margin: 0;
         }
 
         h1 {
-            color: #5a189a;
+            color: #1e3a8a;   /* azul oscuro */
             margin-bottom: 25px;
+            width: 60vw;
+            max-width: 900px;
+            margin: 40px auto 25px auto; /* centrado con margen arriba */
+            text-align: center;
         }
 
         .song-box {
             display: flex;
             align-items: center;
             background: white;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 12px auto;
+            border-radius: 12px;
+            border: 1px solid #c8d3e8; /* borde azul claro */
             cursor: pointer;
             transition: 0.2s;
             text-decoration: none;
             color: black;
+
+            width: 60vw;
+            max-width: 900px;
+
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
 
         .song-box:hover {
-            background: #eee;
+            background: #f2f6ff; /* hover azul muy claro */
             transform: scale(1.01);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
         }
 
         .cover {
@@ -41,6 +52,7 @@
             border-radius: 8px;
             object-fit: cover;
             margin-right: 15px;
+            border: 1px solid #ddd;
         }
 
         .song-name {
@@ -57,22 +69,50 @@
         }
 
         .upload-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background: #5a189a;
+            display: block;
+            margin: 20px auto;
+            padding: 12px 15px;
+            background: #1e3a8a;   /* botón azul principal */
             color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
+            font-weight: bold;
+
+            width: 60vw;
+            max-width: 900px;
+            text-align: center;
+
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+            transition: 0.3s;
         }
 
         .upload-btn:hover {
-            background: #7b2cbf;
+            background: #274bac; /* azul más brillante */
         }
 
+        /* Botón Cuenta */
+        .cuenta-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #1e40af;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+
+        .cuenta-btn:hover {
+            background: #2c55d3;
+        }
     </style>
 </head>
+
 <body>
+
+<a class="cuenta-btn" href="{% url 'core:persona_detail' request.session.persona_id %}">Cuenta</a>
 
 <h1>Mis Canciones</h1>
 
@@ -92,7 +132,9 @@
         </a>
     {% endfor %}
 {% else %}
-    <p>No tienes canciones registradas aún.</p>
+    <p style="text-align:center;width:60vw;margin:auto;color:#1e3a8a;">
+        No tienes canciones registradas aún.
+    </p>
 {% endif %}
 
 <a href="{% url 'core:cancion_create' %}" class="upload-btn">Subir Canción</a>

@@ -1,17 +1,108 @@
-<h1>{{ persona.nombre }} {{ persona.apellido }}</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PoliSongStock</title>
 
-<ul>
-    <li>Username: {{ persona.username }}</li>
-    <li>Correo: {{ persona.correo }}</li>
-    <li>Teléfono: {{ persona.telefono }}</li>
-    <li>Dirección: {{ persona.direccion }}</li>
-    <li>Registrado: {{ persona.fecha_registro }}</li>
-</ul>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f6ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #003A70;
+        }
 
-<a href="{% url 'core:persona_update' persona.pk %}">Editar</a>
-<br>
-<a href="{% url 'core:persona_delete' persona.pk %}">Eliminar</a>
-<br>
-<a href="javascript:history.back()">Volver</a>
-<br>
-<a href="{% url 'core:home' %}">Cerrar Sesion</a>
+        .container {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border: 2px solid #0078B5;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            color: #003A70;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 25px;
+            text-align: left;
+            line-height: 1.8em;
+            font-size: 16px;
+        }
+
+        li span {
+            font-weight: bold;
+            color: #003A70;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            background: #0078B5;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #005F8A;
+        }
+
+        .btn-delete {
+            background: #C62828;
+        }
+
+        .btn-delete:hover {
+            background: #8E0000;
+        }
+
+        .btn-secondary {
+            background: #003A70;
+        }
+
+        .btn-secondary:hover {
+            background: #002B52;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>{{ persona.nombre }} {{ persona.apellido }}</h1>
+
+        <ul>
+            <li><span>Username:</span> {{ persona.username }}</li>
+            <li><span>Correo:</span> {{ persona.correo }}</li>
+            <li><span>Teléfono:</span> {{ persona.telefono }}</li>
+            <li><span>Dirección:</span> {{ persona.direccion }}</li>
+            <li><span>Registrado:</span> {{ persona.fecha_registro }}</li>
+        </ul>
+
+        <a href="{% url 'core:persona_update' persona.pk %}" class="btn">Editar</a>
+
+        <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
+
+        <a href="{% url 'core:home' %}" class="btn">Cerrar sesión</a>
+
+        <a href="{% url 'core:persona_delete' persona.pk %}" class="btn btn-delete">Eliminar</a>
+
+    </div>
+</body>
+</html>

@@ -17,8 +17,6 @@ urlpatterns = [
     path("persona/<int:pk>/edit/", views.persona_update, name="persona_update"),
     path("persona/<int:pk>/delete/", views.persona_delete, name="persona_delete"),
     path("buscar/cancion/", views.buscar_cancion, name="buscar_cancion"),
-    path("buscar/lista/", views.buscar_lista, name="buscar_lista"),
-    path("buscar/vinilo/", views.buscar_vinilo, name="buscar_vinilo"),
     path("cancion/new/", views.cancion_create, name="cancion_create"),
     path("opcion_usuario/", views.opcion_usuario, name="opcion_usuario"),
     path("opcion_admin/", views.opcion_admin, name="opcion_admin"),
@@ -30,6 +28,8 @@ urlpatterns = [
     path("vinilo/lista/", views.vinilo_list, name="vinilo_list"),
     path("vinilo/listau/", views.vinilo_list_user, name="vinilo_list_user"),
     path("vinilo/<int:pk>/", views.vinilo_detail, name="vinilo_detail"),
+    path("vinilo/user/<int:pk>/", views.vinilo_detail_user, name="vinilo_detail_user"),
+    path("vinilo/<int:pk>/edit/", views.vinilo_update, name="vinilo_update"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

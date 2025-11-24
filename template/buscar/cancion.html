@@ -2,78 +2,120 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Buscar Canciones</title>
+    <title>PoliSongStock - Buscar Canciones</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 30px;
-            background: #fafafa;
+            padding: 20px;
+            background: #e8eef7; /* azul claro suave */
+            margin: 0;
         }
 
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 0 10px #ccc;
+        h1 {
+            color: #1e3a8a;   /* azul oscuro */
+            margin-bottom: 25px;
+            width: 60vw;
+            max-width: 900px;
+            margin: 40px auto 25px auto; /* centrado */
+            text-align: center;
         }
 
-        .item {
+        .song-box {
             display: flex;
             align-items: center;
+            background: white;
             padding: 15px;
-            border-bottom: 1px solid #eee;
+            margin: 12px auto;
+            border-radius: 12px;
+            border: 1px solid #c8d3e8; /* borde azul claro */
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: 0.2s;
+            text-decoration: none;
+            color: black;
+
+            width: 60vw;
+            max-width: 900px;
+
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
 
-        .item:hover {
-            background: #f0f0f0;
+        .song-box:hover {
+            background: #f2f6ff; /* hover azul muy claro */
+            transform: scale(1.01);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
         }
 
-        .item img {
-            width: 80px;
-            height: 80px;
+        .cover {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
             object-fit: cover;
-            border-radius: 10px;
-            margin-right: 20px;
+            margin-right: 15px;
+            border: 1px solid #ddd;
         }
 
-        .left {
-            flex-grow: 1;
+        .song-name {
             font-size: 18px;
             font-weight: bold;
+            flex: 1;
+            color: #1e3a8a;
         }
 
-        .right {
+        .artist {
             font-size: 16px;
-            color: #666;
+            color: #555;
+            text-align: right;
+            width: 150px;
+        }
+
+        /* Botón Cuenta */
+        .cuenta-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #1e40af;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .cuenta-btn:hover {
+            background: #2c55d3;
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1>Buscar Canciones</h1>
+<a class="cuenta-btn" href="{% url 'core:persona_detail' request.session.persona_id %}">Cuenta</a>
 
+<h1>Buscar Canciones</h1>
+
+{% if canciones %}
     {% for cancion in canciones %}
-        <a href="{% url 'core:cancion_detail_usuario' cancion.pk %}" style="text-decoration: none; color: inherit;">
-            <div class="item">
-                {% if cancion.caratula %}
-                    <img src="{{ cancion.caratula.url }}" alt="Carátula">
-                {% else %}
-                    <img src="https://via.placeholder.com/80">
-                {% endif %}
+        <a href="{% url 'core:cancion_detail_usuario' cancion.pk %}" class="song-box">
 
-                <div class="left">{{ cancion.nombre }}</div>
-                <div class="right">{{ cancion.artista }}</div>
-            </div>
+            {% if cancion.caratula %}
+                <img src="{{ cancion.caratula.url }}" class="cover">
+            {% else %}
+                <img src="https://via.placeholder.com/80" class="cover">
+            {% endif %}
+
+            <div class="song-name">{{ cancion.nombre }}</div>
+            <div class="artist">{{ cancion.artista }}</div>
+
         </a>
-    {% empty %}
-        <p>No hay canciones disponibles.</p>
     {% endfor %}
-</div>
+{% else %}
+    <p style="text-align:center;width:60vw;margin:auto;color:#1e3a8a;">
+        No hay canciones disponibles.
+    </p>
+{% endif %}
+
 </body>
 </html>

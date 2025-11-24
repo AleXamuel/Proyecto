@@ -100,10 +100,6 @@ def persona_create_admin(request):
 def buscar_cancion(request):
     canciones = Cancion.objects.all()
     return render(request, "buscar/cancion.html", {"canciones": canciones})
-def buscar_lista(request):
-    return render(request, "buscar/lista.html")
-def buscar_vinilo(request):
-    return render(request, "buscar/vinilo.html")
 
 #Metodos de segunda pagina admin
 @require_http_methods(["GET", "POST"])
@@ -205,7 +201,41 @@ def vinilo_list_user(request):
     })
 @require_http_methods(["GET"])
 def vinilo_detail(request, pk):
-    cancion = get_object_or_404(Vinilo, pk=pk)
+    vinilo = get_object_or_404(Vinilo, pk=pk)
+    canciones = (
+        ContenidoVinilos.objects
+        .filter(vinilo=vinilo)
+        .select_related("cancion")
+    )
     return render(request, "vinilo/detail.html", {
-        "vinilo": cancion
+        "vinilo": vinilo,
+        "canciones": canciones,
     })
+@require_http_methods(["GET"])
+def vinilo_detail_user(request, pk):
+    vinilo = get_object_or_404(Vinilo, pk=pk)
+    canciones = (
+        ContenidoVinilos.objects
+        .filter(vinilo=vinilo)
+        .select_related("cancion")
+    )
+    return render(request, "vinilo/detail_user.html", {
+        "vinilo": vinilo,
+        "canciones": canciones,
+    })
+def vinilo_update(request, pk):
+    vinilo = get_object_or_404(Vinilo, pk=pk)
+
+    if request.method == "POST":
+        form = ViniloForm(request.POST, request.FILES, instance=vinilo)
+        if form.is_valid():
+            form.save()
+            return redirect("core:vinilo_detail_user", pk=vinilo.pk)
+    else:
+        form = ViniloForm(instance=vinilo)
+
+    return render(request, "vinilo/form.html", {
+        "form": form,
+        "titulo": "Editar Vinilo",   # por si quieres usarlo en el template
+    })
+

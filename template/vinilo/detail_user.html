@@ -9,6 +9,7 @@
             --bg: #fafafa;
             --card: #ffffff;
             --accent: #0b76ef;
+            --danger: #d9534f;
             --muted: #666;
         }
 
@@ -77,15 +78,29 @@
             color: #333;
         }
 
-        .back-btn {
+        /* Botones */
+        .btn-row {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
             display: inline-block;
-            margin-top: 22px;
-            padding: 8px 14px;
-            background: var(--accent);
-            color: #fff;
-            text-decoration: none;
+            padding: 10px 16px;
             border-radius: 8px;
+            text-decoration: none;
             font-weight: 600;
+            color: white;
+            font-size: 15px;
+        }
+
+        .btn-edit {
+            background: var(--accent);
+        }
+
+        .btn-back {
+            background: #444;
         }
     </style>
 </head>
@@ -121,7 +136,16 @@
             <p style="color: var(--muted); margin-top: 10px;">Este vinilo no tiene canciones asociadas.</p>
         {% endif %}
 
-        <a href="{% url 'core:vinilo_list' %}" class="back-btn">Volver</a>
+        <!-- BOTONES -->
+        <div class="btn-row">
+            <a href="{% url 'core:vinilo_update' vinilo.pk %}" class="btn btn-edit">
+                ✏️ Editar Vinilo
+            </a>
+
+            <a href="{% url 'core:vinilo_list' %}" class="btn btn-back">
+                ↩ Volver
+            </a>
+        </div>
 
     </div>
 

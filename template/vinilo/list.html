@@ -7,10 +7,11 @@
 
     <style>
         :root{
-            --bg: #fafafa;
+            --bg: #e8eef7;          /* azul muy claro */
             --card: #ffffff;
-            --accent: #0b76ef;
-            --muted: #666;
+            --accent: #1e3a8a;      /* azul oscuro */
+            --accent-light: #2c55d3;
+            --muted: #475569;
         }
 
         html, body {
@@ -26,6 +27,7 @@
             padding: 20px;
         }
 
+        /* HEADER */
         .header {
             display: flex;
             align-items: center;
@@ -35,34 +37,39 @@
         }
 
         .title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
-            color: #222;
+            color: #1e3a8a;
         }
 
         .actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
+        /* BOTONES */
         .btn {
-            padding: 8px 14px;
+            padding: 9px 15px;
             border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
+            transition: 0.25s;
         }
 
         .btn-primary {
             background: var(--accent);
-            color: #fff;
-            box-shadow: 0 6px 18px rgba(11,118,239,0.12);
-            border: none;
+            color: white;
+            box-shadow: 0 6px 18px rgba(30,58,138,0.18);
         }
 
-        /* ---- GRID DE VINILOS ---- */
+        .btn-primary:hover {
+            background: var(--accent-light);
+        }
+
+        /* GRID DE VINILOS */
         .vinilos-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -72,8 +79,8 @@
 
         .vinilo-card {
             background: var(--card);
-            border: 1px solid #ddd;
-            border-radius: 12px;
+            border: 1px solid #c7d2fe;
+            border-radius: 14px;
             padding: 15px;
             text-align: center;
             cursor: pointer;
@@ -81,16 +88,17 @@
         }
 
         .vinilo-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(30,58,138,0.15);
         }
 
         .vinilo-img {
             width: 100%;
-            height: 280px;
+            height: 260px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 12px;
+            border: 1px solid #d4dcf7;
         }
 
         .vinilo-info {
@@ -98,30 +106,53 @@
             justify-content: space-between;
             padding: 0 5px;
             font-weight: 600;
-            color: #333;
+            color: #1e293b;
         }
 
         .vinilo-price {
             color: var(--accent);
         }
 
+        /* MENSAJE VACÍO */
         .empty-message {
             padding: 40px;
             text-align: center;
             color: var(--muted);
         }
 
-        /* responsive */
+        /* RESPONSIVE */
         @media (max-width: 760px) {
             .vinilos-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
         @media (max-width: 520px) {
             .vinilos-grid {
                 grid-template-columns: 1fr;
             }
-            .title { font-size: 19px; }
+            .title { font-size: 20px; }
+        }
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .cuenta-btn {
+            background: #0078B5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: 0.2s ease;
+        }
+
+        .cuenta-btn:hover {
+            background: #005F8A;
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -135,8 +166,14 @@
         <div class="title">Buscar Vinilos</div>
 
         <div class="actions">
+            <a href="{% url 'core:vinilo_list_user' %}" class="btn btn-primary">
+                Mis vinilos
+            </a>
             <a href="{% url 'core:vinilo_create' %}" class="btn btn-primary">
                 Subir Vinilo
+            </a>
+            <a href="{% url 'core:persona_detail' request.session.persona_id %}" class="btn btn-primary">
+                Cuenta
             </a>
         </div>
     </div>
@@ -150,11 +187,14 @@
             {% for vinilo in vinilos %}
                 <a href="{% url 'core:vinilo_detail' vinilo.pk %}" 
                    style="text-decoration:none; color:inherit;">
+                    
                     <div class="vinilo-card">
 
+                        {% if vinilo.caratula %}
                         <img src="{{ vinilo.caratula.url }}"
                              class="vinilo-img"
                              alt="Carátula de {{ vinilo.nombre }}">
+                        {% endif %}
 
                         <div class="vinilo-info">
                             <span>{{ vinilo.nombre }}</span>
@@ -168,12 +208,11 @@
         </div>
 
         {% else %}
-            <p class="empty-message">
-                No hay vinilos disponibles aún.
-            </p>
+            <p class="empty-message">No hay vinilos disponibles aún.</p>
         {% endif %}
 
     </div>
+    
 
 </div>
 
