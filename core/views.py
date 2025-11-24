@@ -272,7 +272,16 @@ def carrito_cancion(request, pk):
     )
     # Redirigir a la misma página
     return redirect(request.META.get("HTTP_REFERER", "/"))
+def carrito_eliminar_vinilo(request, pk):
+    item = get_object_or_404(CarritoVinilo, pk=pk)
+    item.delete()
+    return redirect("core:carrito_list")   # Ajusta al nombre real de tu vista carrito
 
+
+def carrito_eliminar_cancion(request, pk):
+    item = get_object_or_404(CarritoCancion, pk=pk)
+    item.delete()
+    return redirect("core:carrito_list")
 def carrito_list(request):
     user_id = request.session.get("user_id")
     user = Usuario.objects.get(pk=user_id)

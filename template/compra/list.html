@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Historial de Compras</title>
@@ -19,7 +19,7 @@
             padding: 25px;
             border-radius: 14px;
             border: 2px solid #0078B5;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
         }
 
         h1 {
@@ -60,21 +60,23 @@
         <h1>Historial de Compras</h1>
 
         {% if compras %}
-            {% for compra in compras %}
-                <div class="item">
-                    <a href="{% url 'core:compra_detail' compra.id_compra %}">
-                        Compra #{{ compra.id_compra }} — {{ compra.fecha }}  
-                        <br>
-                        Total: ${{ compra.total }}
-                    </a>
-                </div>
-            {% endfor %}
+        {% for compra in compras %}
+        <div class="item">
+            <a href="{% url 'core:compra_detail' compra.id_compra %}">
+                Compra #{{ forloop.counter }} — {{ compra.fecha }}
+                <br>
+                Total: ${{ compra.total }}
+            </a>
+        </div>
+        {% endfor %}
+
         {% else %}
-            <p>No has realizado compras aún.</p>
+        <p>No has realizado compras aún.</p>
         {% endif %}
 
         <a href="javascript:history.back()" class="btn">Volver</a>
 
     </div>
 </body>
+
 </html>

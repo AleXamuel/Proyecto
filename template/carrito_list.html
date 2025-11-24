@@ -28,10 +28,10 @@
         <div class="vinilos-grid">
 
             {% for item in vinilos %}
-            <a href="{% url 'core:vinilo_detail' item.vinilo.pk %}" style="text-decoration:none; color:inherit;">
 
-                <div class="vinilo-card">
+            <div class="vinilo-card">
 
+                <a href="{% url 'core:vinilo_detail' item.vinilo.pk %}" style="text-decoration:none; color:inherit;">
                     {% if item.vinilo.caratula %}
                     <img src="{{ item.vinilo.caratula.url }}" class="vinilo-img"
                         alt="Carátula de {{ item.vinilo.nombre }}">
@@ -41,9 +41,18 @@
                         <span>{{ item.vinilo.nombre }}</span>
                         <span class="vinilo-price">${{ item.vinilo.precio }}</span>
                     </div>
+                </a>
 
-                </div>
-            </a>
+                <!-- BOTÓN ELIMINAR -->
+                <form method="POST" action="{% url 'core:carrito_eliminar_vinilo' item.id_carrito_vinilo %}">
+                    {% csrf_token %}
+                    <button class="btn-delete">
+                        Eliminar ❌
+                    </button>
+                </form>
+
+            </div>
+
             {% endfor %}
 
         </div>
@@ -60,24 +69,39 @@
 
     {% if canciones %}
     {% for item in canciones %}
-    <a href="{% url 'core:cancion_detail_usuario' item.cancion.pk %}" class="song-box">
 
-        {% if item.cancion.caratula %}
-        <img src="{{ item.cancion.caratula.url }}" class="cover">
-        {% else %}
-        <img src="/static/no-cover.png" class="cover">
-        {% endif %}
+    <div class="song-wrapper">
 
-        <div class="song-name">{{ item.cancion.nombre }}</div>
-        <div class="artist">{{ item.cancion.artista }}</div>
+        <a href="{% url 'core:cancion_detail_usuario' item.cancion.pk %}" class="song-box">
 
-    </a>
+            {% if item.cancion.caratula %}
+            <img src="{{ item.cancion.caratula.url }}" class="cover">
+            {% else %}
+            <img src="/static/no-cover.png" class="cover">
+            {% endif %}
+
+            <div class="song-name">{{ item.cancion.nombre }}</div>
+            <div class="artist">{{ item.cancion.artista }}</div>
+
+        </a>
+
+        <!-- BOTÓN ELIMINAR -->
+        <form method="POST" action="{% url 'core:carrito_eliminar_cancion' item.id_carrito_cancion %}" style="text-align:center;">
+            {% csrf_token %}
+            <button class="btn-delete" style="width:60vw; max-width:900px;">
+                Eliminar ❌
+            </button>
+        </form>
+
+    </div>
+
     {% endfor %}
     {% else %}
     <p class="empty-message" style="text-align:center;">
         No tienes canciones en el carrito.
     </p>
     {% endif %}
+
 
     <!-- BOTÓN PAGAR -->
     <div style="position: fixed; bottom: 25px; right: 25px;">
@@ -89,8 +113,6 @@
             </button>
         </form>
     </div>
-
-
 
 </div>
 
@@ -105,6 +127,7 @@
         --accent: #1e3a8a;
         --accent-light: #2c55d3;
         --muted: #475569;
+        --danger: #dc2626;
     }
 
     html,
@@ -170,7 +193,6 @@
         border-radius: 14px;
         padding: 15px;
         text-align: center;
-        cursor: pointer;
         transition: 0.15s;
     }
 
@@ -224,6 +246,12 @@
         transform: scale(1.01);
     }
 
+    .song-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .cover {
         width: 70px;
         height: 70px;
@@ -243,6 +271,23 @@
         color: #555;
         width: 150px;
         text-align: right;
+    }
+
+    /* BOTÓN ELIMINAR */
+    .btn-delete {
+        background: var(--danger);
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 15px;
+        margin-top: 8px;
+        width: 100%;
+    }
+
+    .btn-delete:hover {
+        background: #b91c1c;
     }
 </style>
 
