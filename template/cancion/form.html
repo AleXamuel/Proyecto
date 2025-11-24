@@ -1,9 +1,131 @@
-<h1>{% if mode == "edit" %}Editar{% else %}Subir{% endif %} Cancion</h1>
-<form method="post"  enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Guardar</button>
-</form>
-<a href="{% url 'core:cancion_list_admin'%}">Ver canciones</a>
-<br>
-<a href="javascript:history.back()">Volver</a>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if mode == "edit" %}Editar{% else %}Subir{% endif %} Canción</title>
+
+    <style>
+        :root{
+            --bg: #e8eef7;          /* azul muy claro */
+            --card: #ffffff;
+            --accent: #1e3a8a;      /* azul oscuro */
+            --accent-light: #2c55d3;
+            --muted: #475569;
+        }
+
+        body {
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background: var(--bg);
+        }
+
+        h1 {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 26px;
+        }
+
+        /* Tarjeta */
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background: var(--card);
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(30,58,138,0.12);
+            border: 1px solid #c7d2fe;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin: 14px 0 5px;
+            color: #1e293b;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(30,58,138,0.15);
+        }
+
+        .submit-btn {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            background: var(--accent);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-light);
+        }
+
+        /* Links */
+        .links {
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .links a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>{% if mode == "edit" %}Editar{% else %}Subir{% endif %} Canción</h1>
+
+<div class="form-container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+                <div style="color: red; margin-top:5px;">{{ field.errors }}</div>
+            {% endif %}
+        {% endfor %}
+
+        <button class="submit-btn" type="submit">Guardar</button>
+    </form>
+</div>
+
+<div class="links">
+    <a href="{% url 'core:cancion_list_admin' %}">Ver canciones</a> |
+    <a href="javascript:history.back()">Volver</a>
+</div>
+
+</body>
+</html>

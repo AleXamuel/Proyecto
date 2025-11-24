@@ -2,124 +2,133 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>PoliSongStock</title>
+    <title>{% if mode == "edit" %}Editar{% else %}Crear{% endif %} Persona</title>
 
     <style>
+        :root{
+            --bg: #e8eef7;          /* azul muy claro */
+            --card: #ffffff;
+            --accent: #1e3a8a;      /* azul oscuro */
+            --accent-light: #2c55d3;
+            --muted: #475569;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f0f6ff;
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #003A70;
-        }
-
-        /* Botón cuenta */
-        .top-right {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        .cuenta-btn {
-            background: #0078B5;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: 0.2s ease;
-        }
-
-        .cuenta-btn:hover {
-            background: #005F8A;
-            transform: translateY(-2px);
-        }
-
-        /* Caja principal */
-        .container {
-            background: white;
-            width: 90%;
-            max-width: 500px;
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-            border: 2px solid #0078B5;
-            text-align: center;
+            padding: 40px 20px;
+            background: var(--bg);
         }
 
         h1 {
-            color: #003A70;
-            margin-bottom: 20px;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 26px;
         }
 
-        form {
-            text-align: left;
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background: var(--card);
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 8px 22px rgba(30,58,138,0.12);
+            border: 1px solid #c7d2fe;
         }
 
-        button {
+        label {
+            font-weight: 600;
+            display: block;
+            margin: 14px 0 5px;
+            color: #1e293b;
+        }
+
+        input, select, textarea {
             width: 100%;
-            padding: 12px;
-            margin-top: 15px;
-            background: #0078B5;
-            color: white;
-            border: none;
+            padding: 10px;
             border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            font-size: 14px;
             transition: 0.2s;
         }
 
-        button:hover {
-            background: #005F8A;
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(30,58,138,0.15);
         }
 
-        .btn-secondary {
-            display: block;
+        .submit-btn {
+            margin-top: 25px;
             width: 100%;
             padding: 12px;
-            text-align: center;
-            background: #003A70;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            background: var(--accent);
             color: white;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-weight: bold;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-light);
+        }
+
+        .links {
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .links a {
+            color: var(--accent);
+            font-weight: 600;
             text-decoration: none;
         }
 
-        .btn-secondary:hover {
-            background: #002B52;
+        .links a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Botón Cuenta -->
-    
+<h1>{% if mode == "edit" %}Editar{% else %}Crear{% endif %} Persona</h1>
 
-    <div class="container">
-        <h1>
-            {% if mode == "edit" %}
-                Editar Persona
-            {% else %}
-                Crear Persona
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+                <div style="color: red; margin-top:5px;">{{ field.errors }}</div>
             {% endif %}
-        </h1>
+        {% endfor %}
 
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Guardar</button>
-        </form>
+        <!-- (Opcional) Campo extra -->
+        {% if extra_field %}
+            <label>{{ extra_field_label }}</label>
+            <input type="text" name="extra" required>
+        {% endif %}
 
-        <a href="javascript:history.back()" class="btn-secondary">Volver</a>
-    </div>
+        <button class="submit-btn" type="submit">Guardar</button>
+    </form>
+</div>
+
+<div class="links">
+    <a href="javascript:history.back()">Volver</a>
+</div>
 
 </body>
 </html>
