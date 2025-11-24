@@ -95,11 +95,14 @@
             <li><span>Registrado:</span> {{ persona.fecha_registro }}</li>
         </ul>
 
-        <a href="{% url 'core:persona_update' persona.pk %}" class="btn">Editar</a>
+        <a href="{% url 'core:persona_update' persona.pk %}" class="btn btn-secondary">Editar</a>
 
         <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
+        
+        <a href="{% url 'core:compra_list' %}" class="btn btn-secondary">Historial de Compras</a>
 
-        <a href="{% url 'core:home' %}" class="btn">Cerrar sesión</a>
+
+        <a href="{% url 'core:home' %}" class="btn btn-secondary">Cerrar sesión</a>
 
         <a href="{% url 'core:persona_delete' persona.pk %}" class="btn btn-delete">Eliminar</a>
 

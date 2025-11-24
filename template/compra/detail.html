@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Compra</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f6ff;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            border: 2px solid #0078B5;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+        }
+
+        h1 {
+            text-align: center;
+            color: #003A70;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #003A70;
+        }
+
+        .item {
+            background: #eef6ff;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #b5d4ff;
+        }
+
+        .btn {
+            display: block;
+            background: #0078B5;
+            padding: 12px;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Compra #{{ compra.id_compra }}</h1>
+        <p><strong>Fecha:</strong> {{ compra.fecha }}</p>
+        <p><strong>Total:</strong> ${{ compra.total }}</p>
+
+        <h2>Vinilos Comprados</h2>
+        {% if vinilos %}
+            {% for item in vinilos %}
+                <div class="item">
+                    {{ item.vinilo.nombre }} — ${{ item.vinilo.precio }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No se compraron vinilos.</p>
+        {% endif %}
+
+        <h2>Canciones Compradas</h2>
+        {% if canciones %}
+            {% for item in canciones %}
+                <div class="item">
+                    {{ item.cancion.nombre }} — ${{ item.cancion.precio }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No se compraron canciones.</p>
+        {% endif %}
+
+        <a href="{% url 'core:compra_list' %}" class="btn">Volver</a>
+
+    </div>
+</body>
+</html>

@@ -1,7 +1,6 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-
 from . import views
 
 
@@ -29,7 +28,15 @@ urlpatterns = [
     path("vinilo/listau/", views.vinilo_list_user, name="vinilo_list_user"),
     path("vinilo/<int:pk>/", views.vinilo_detail, name="vinilo_detail"),
     path("vinilo/user/<int:pk>/", views.vinilo_detail_user, name="vinilo_detail_user"),
-    path("vinilo/<int:pk>/edit/", views.vinilo_update, name="vinilo_update"),
+    path("vinilo/<int:pk>/edit/", views.vinilo_update, name="vinilo_update"),   
+    path("carrito/vinilo/<int:pk>", views.carrito_vinilo, name="carrito_vinilo"),
+    path("carrito/cancion/<int:pk>", views.carrito_cancion, name="carrito_cancion"),
+    path("carrito", views.carrito_list, name="carrito_list"),
+    path("carrito/pago", views.carrito_pagar, name="carrito_pagar"),
+    path("compras/", views.compra_list, name="compra_list"),
+    path("compras/<int:compra_id>/", views.compra_detail, name="compra_detail"),
+
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>{{ vinilo.nombre }}</title>
 
     <style>
-        :root{
+        :root {
             --bg: #fafafa;
             --card: #ffffff;
             --accent: #0b76ef;
@@ -28,7 +29,7 @@
             background: var(--card);
             padding: 25px;
             border-radius: 14px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
         }
 
         .vinilo-img {
@@ -92,40 +93,43 @@
 
 <body>
 
-<div class="page">
+    <div class="page">
 
-    <div class="vinilo-detail">
+        <div class="vinilo-detail">
 
-        <img src="{{ vinilo.caratula.url }}"
-             alt="Carátula de {{ vinilo.nombre }}"
-             class="vinilo-img">
+            <img src="{{ vinilo.caratula.url }}" alt="Carátula de {{ vinilo.nombre }}" class="vinilo-img">
 
-        <div class="vinilo-info">
-            <h1>{{ vinilo.nombre }}</h1>
-            <div class="vinilo-price">$ {{ vinilo.precio }}</div>
-        </div>
+            <div class="vinilo-info">
+                <h1>{{ vinilo.nombre }}</h1>
+                <div class="vinilo-price">$ {{ vinilo.precio }}</div>
+            </div>
 
-        {% if vinilo.descripcion %}
-        <p class="vinilo-description">{{ vinilo.descripcion }}</p>
-        {% endif %}
+            {% if vinilo.descripcion %}
+            <p class="vinilo-description">{{ vinilo.descripcion }}</p>
+            {% endif %}
 
-        <div class="songs-title">Canciones</div>
+            <div class="songs-title">Canciones</div>
 
-        {% if canciones %}
-        <ul class="song-list">
-            {% for item in canciones %}
+            {% if canciones %}
+            <ul class="song-list">
+                {% for item in canciones %}
                 <li>{{ item.cancion.nombre }}</li>
-            {% endfor %}
-        </ul>
-        {% else %}
+                {% endfor %}
+            </ul>
+            {% else %}
             <p style="color: var(--muted); margin-top: 10px;">Este vinilo no tiene canciones asociadas.</p>
-        {% endif %}
+            {% endif %}
 
-        <a href="{% url 'core:vinilo_list' %}" class="back-btn">Volver</a>
+            <a href="{% url 'core:vinilo_list' %}" class="back-btn">Volver</a>
+            <a href="{% url 'core:carrito_vinilo' vinilo.pk %}" class="back-btn">
+                &#128722 Agregar al carrito
+            </a>
+
+
+        </div>
 
     </div>
 
-</div>
-
 </body>
+
 </html>

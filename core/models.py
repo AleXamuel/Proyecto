@@ -168,7 +168,7 @@ class Carrito(models.Model):
         db_table = "Carrito"
 
     def __str__(self):
-        return f"Carrito {self.id_carrito}"
+        return f"Carrito {self.id_carrito}" 
 
 
 class CarritoCancion(models.Model):

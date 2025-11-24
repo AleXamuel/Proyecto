@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +33,7 @@
             border-radius: 10px;
             text-decoration: none;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             transition: 0.2s ease;
         }
 
@@ -48,7 +49,7 @@
             border-radius: 18px;
             width: 90%;
             max-width: 450px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
             border: 2px solid #0078B5;
         }
 
@@ -75,14 +76,13 @@
             font-size: 20px;
             font-weight: bold;
             transition: all 0.25s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
         .option:hover {
             background: #005F8A;
             transform: translateY(-3px);
         }
-
     </style>
 </head>
 
@@ -101,10 +101,11 @@
 
         <div class="options">
             <a href="{% url 'core:buscar_cancion' %}" class="option">Canciones</a>
-           <a href="{% url 'core:vinilo_list' %}" class="option">Playlist</a>
+            <a href="{% url 'core:vinilo_list' %}" class="option">Playlist</a>
             <a href="{% url 'core:vinilo_list' %}" class="option">Vinilos</a>
         </div>
     </div>
 
 </body>
+
 </html>

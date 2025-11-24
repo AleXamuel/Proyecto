@@ -239,3 +239,129 @@ def vinilo_update(request, pk):
         "titulo": "Editar Vinilo",   # por si quieres usarlo en el template
     })
 
+
+#Carrito
+def carrito_vinilo(request, pk):
+    # Obtener vinilo
+    vinilo = get_object_or_404(Vinilo, id_vinilo=pk)
+    # Obtener usuario en sesión
+    user_id = request.session.get("user_id")
+    user = Usuario.objects.get(pk=user_id)
+    # Obtener carrito del usuario
+    carrito = Carrito.objects.get(usuario=user)
+    # Crear relación en CarritoVinilo
+    CarritoVinilo.objects.create(
+        carrito=carrito,
+        vinilo=vinilo
+    )
+    # Redirigir a la misma página
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+def carrito_cancion(request, pk):
+    # Obtener vinilo
+    cancion = get_object_or_404(Cancion, id_cancion=pk)
+    # Obtener usuario en sesión
+    user_id = request.session.get("user_id")
+    user = Usuario.objects.get(pk=user_id)
+    # Obtener carrito del usuario
+    carrito = Carrito.objects.get(usuario=user)
+    # Crear relación en CarritoVinilo
+    CarritoCancion.objects.create(
+        carrito=carrito,
+        cancion=cancion
+    )
+    # Redirigir a la misma página
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+def carrito_list(request):
+    user_id = request.session.get("user_id")
+    user = Usuario.objects.get(pk=user_id)
+
+    carrito = Carrito.objects.get(usuario=user)
+
+    # Obtener vinilos y canciones del carrito
+    vinilos = CarritoVinilo.objects.filter(carrito=carrito).select_related("vinilo")
+    canciones = CarritoCancion.objects.filter(carrito=carrito).select_related("cancion")
+
+    return render(request, "carrito_list.html", {
+        "vinilos": vinilos,
+        "canciones": canciones,
+    })
+
+def carrito_pagar(request):
+    if request.method != "POST":
+        return redirect("core:carrito_list")
+
+    user_id = request.session.get("user_id")
+    user = Usuario.objects.get(pk=user_id)
+
+    # Obtener carrito
+    carrito = Carrito.objects.get(usuario=user)
+
+    # Obtener items del carrito
+    vinilos_carrito = CarritoVinilo.objects.filter(carrito=carrito)
+    canciones_carrito = CarritoCancion.objects.filter(carrito=carrito)
+
+    # Calcular total
+    total_vinilos = sum(item.vinilo.precio for item in vinilos_carrito)
+    total_canciones = sum(item.cancion.precio for item in canciones_carrito)
+    total = total_vinilos + total_canciones
+
+    # Crear compra
+    compra = Compra.objects.create(
+        usuario=user,
+        fecha=timezone.now().strftime("%Y-%m-%d"),
+        total=total
+    )
+
+    # =============================
+    #   MOVER VINILOS A COMPRA
+    # =============================
+    for item in vinilos_carrito:
+        CompraVinilo.objects.create(
+            compra=compra,
+            vinilo=item.vinilo
+        )
+
+    # =============================
+    #   MOVER CANCIONES A COMPRA
+    # =============================
+    for item in canciones_carrito:
+        CompraCancion.objects.create(
+            compra=compra,
+            cancion=item.cancion
+        )
+
+    # =============================
+    #   LIMPIAR CARRITO
+    # =============================
+    vinilos_carrito.delete()
+    canciones_carrito.delete()
+
+    return redirect("core:carrito_list")
+
+def compra_list(request):
+    user_id = request.session.get("user_id")
+    user = Usuario.objects.get(pk=user_id)
+
+    compras = Compra.objects.filter(usuario=user).order_by("-id_compra")
+
+    return render(request, "compra/list.html", {
+        "compras": compras
+    })
+
+
+def compra_detail(request, compra_id):
+    compra = Compra.objects.get(pk=compra_id)
+
+    vinilos = CompraVinilo.objects.filter(compra=compra).select_related("vinilo")
+    canciones = CompraCancion.objects.filter(compra=compra).select_related("cancion")
+
+    return render(request, "compra/detail.html", {
+        "compra": compra,
+        "vinilos": vinilos,
+        "canciones": canciones
+    })
+
+
+

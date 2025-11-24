@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Compras</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f6ff;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            border: 2px solid #0078B5;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+        }
+
+        h1 {
+            text-align: center;
+            color: #003A70;
+            margin-bottom: 25px;
+        }
+
+        .item {
+            padding: 15px;
+            background: #e9f3ff;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #b5d4ff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #003A70;
+            font-weight: bold;
+        }
+
+        .btn {
+            display: block;
+            background: #0078B5;
+            padding: 12px;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Historial de Compras</h1>
+
+        {% if compras %}
+            {% for compra in compras %}
+                <div class="item">
+                    <a href="{% url 'core:compra_detail' compra.id_compra %}">
+                        Compra #{{ compra.id_compra }} — {{ compra.fecha }}  
+                        <br>
+                        Total: ${{ compra.total }}
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No has realizado compras aún.</p>
+        {% endif %}
+
+        <a href="javascript:history.back()" class="btn">Volver</a>
+
+    </div>
+</body>
+</html>
